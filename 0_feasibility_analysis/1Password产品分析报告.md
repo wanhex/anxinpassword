@@ -23,6 +23,71 @@
 
 ### 产品逻辑
 
+| 信息层和表面层 |                                                              |
+| -------------- | ------------------------------------------------------------ |
+| 结构层         |                                                              |
+| 范围层         | 密码管理、隐私数据管理、数据加密、技术支持、密码泄露提醒、与团队和家庭共享 |
+| 战略层         |                                                              |
+
+战略层：The world’s most-loved password manager
+
+范围层：**PasswordManager**、**1Password Watchtower**、**Digital Wallet**、**Unrivaled support**、**Travel Mode**、**Advanced Encryption**、**Total privacy**
+
+**PasswordManager**：1Password is the easiest way to store and use strong passwords. Log in to sites and fill forms securely with a single click.
+
+**1Password Watchtower**：Receive alerts for compromised websites and vulnerable passwords so you can take action to stay secure.
+
+**Digital Wallet**：Securely store credit and debit cards, online banking information, and PayPal logins so you can fill them from any device.
+
+**Unrivaled support**：Whenever you need it, our global team is here to help. Get free, one-on-one support from the 1Password team.
+
+**Travel Mode**：Remove sensitive data from your devices when you cross borders, and restore access with a click when you arrive.
+
+**Advanced Encryption**：Our security recipe starts with AES-256 bit encryption and uses multiple techniques to protect your data at rest and in transit.
+
+**Total privacy**：Only you can access your data. We don’t use it, we don’t share it, and we don’t sell it. You’re our customer, not our product.
+
+  **安全存放密码**
+
+1Password 为您记住您的所有密码，并将它们保存在安全的地方，用一个只有你知道的密码保护它们。
+
+◆ 为您的所有在线账号创建强壮且唯一的密码
+◆ 将用户名和密码自动填入网站和应用
+◆ 随意在您的移动设备和计算机上存取您的信息
+◆ 与您的家人或公司安全地分享密码
+◆ 解锁只需一触——指纹解锁
+
+
+**安全存放隐私信息**
+
+1Password 不仅仅能存密码：它还可以存放您的财务信息、个人证件，或任何您需要在其中存放的需保持安全和便于访问的信息。
+
+◆ 存储信息的类别多达几十种：登录信息、信用卡、地址、笔记、银行账号、驾驶执照、护照等等。
+◆ 可以创建多个存储库，将生活中的不同领域分隔开来
+◆ 可用收藏夹管理您的信息
+◆ 可使用搜索来查找和筛选您的信息
+
+
+**保持安全**
+
+您在 1Password 中存储的所有数据都以一个主密码保护，而主密码只有您知道。 1Password 使用端到端加密，因此只会在本地解密您的数据。 加密密钥永远不会离开您的设备，因此只有您可以接触到您的密码。
+
+◆ 使用指纹解锁可快速、安全地解锁本应用
+◆ 自动锁定本应用，确保您的数据不受侵害，即使您的设备遗失或被盗
+
+
+**与团队和家庭共享**
+
+1Password for Android 已完全支持团队和家庭帐户。 与您共同工作的同事、或共同生活的家人，共享 1Password 的安全方便性，从未如此简单
+
+◆新增您的所有帐户—家庭、团队、个人—然后在同个地方看到您所有信息
+◆ 轻松地迁移帐户之间的信息
+◆ 与更多的队友与家庭成员共享密码  
+
+结构层
+
+信息层和表面成：
+
 ### 功能列表
 
 ## 产品运营状况
