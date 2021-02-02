@@ -2,10 +2,12 @@
 
 ## 修订记录
 
-| 日期       | 修订版本 | 修订描述           | 修订人 |
-| ---------- | -------- | ------------------ | ------ |
-| 2021-01-05 | v0.5     | 创建               | wanhex |
-| 2021-01-10 | v0.5.5   | 增加目的和产品描述 | wanhex |
+| 日期       | 修订版本 | 修订描述             | 修订人 |
+| ---------- | -------- | -------------------- | ------ |
+| 2021-01-05 | v0.5     | 创建                 | wanhex |
+| 2021-01-10 | v0.5.5   | 增加目的和产品描述   | wanhex |
+| 2021-02-02 | v0.5.8   | 增加产品逻辑描述     | wanhex |
+| 2021-02-02 | v0.6.0   | 增加功能列表思维导图 | wanhex |
 
 ## 目的
 
@@ -23,15 +25,11 @@
 
 ### 产品逻辑
 
-| 信息层和表面层 |                                                              |
-| -------------- | ------------------------------------------------------------ |
-| 结构层         |                                                              |
-| 范围层         | 密码管理、隐私数据管理、数据加密、技术支持、密码泄露提醒、与团队和家庭共享 |
-| 战略层         |                                                              |
+**以下内容来自1password官网：**
 
-战略层：The world’s most-loved password manager
+The world’s most-loved password manager
 
-范围层：**PasswordManager**、**1Password Watchtower**、**Digital Wallet**、**Unrivaled support**、**Travel Mode**、**Advanced Encryption**、**Total privacy**
+**PasswordManager**、**1Password Watchtower**、**Digital Wallet**、**Unrivaled support**、**Travel Mode**、**Advanced Encryption**、**Total privacy**
 
 **PasswordManager**：1Password is the easiest way to store and use strong passwords. Log in to sites and fill forms securely with a single click.
 
@@ -47,7 +45,9 @@
 
 **Total privacy**：Only you can access your data. We don’t use it, we don’t share it, and we don’t sell it. You’re our customer, not our product.
 
-  **安全存放密码**
+ **以下内容来自GooglePlay 1Password主页：**
+
+ **安全存放密码**
 
 1Password 为您记住您的所有密码，并将它们保存在安全的地方，用一个只有你知道的密码保护它们。
 
@@ -67,14 +67,12 @@
 ◆ 可用收藏夹管理您的信息
 ◆ 可使用搜索来查找和筛选您的信息
 
-
 **保持安全**
 
 您在 1Password 中存储的所有数据都以一个主密码保护，而主密码只有您知道。 1Password 使用端到端加密，因此只会在本地解密您的数据。 加密密钥永远不会离开您的设备，因此只有您可以接触到您的密码。
 
 ◆ 使用指纹解锁可快速、安全地解锁本应用
 ◆ 自动锁定本应用，确保您的数据不受侵害，即使您的设备遗失或被盗
-
 
 **与团队和家庭共享**
 
@@ -84,15 +82,45 @@
 ◆ 轻松地迁移帐户之间的信息
 ◆ 与更多的队友与家庭成员共享密码  
 
-结构层
+**总结如下：**
 
-信息层和表面成：
+| 层次           | 不同层次的产品逻辑描述                                       |
+| -------------- | ------------------------------------------------------------ |
+| 信息层和表面层 | 见下述功能列表                                               |
+| 结构层         | 暂略                                                         |
+| 范围层         | 密码管理、网站密码泄露提醒、隐私数据管理、数字钱包、高级数据加密、技术支持、旅行模式、与团队和家庭共享 |
+| 战略层         | The world’s most-loved password manager                      |
 
 ### 功能列表
+
+![](1Password产品分析报告.assets/1Password.png)
 
 ## 产品运营状况
 
 ### 当前运营数据
+
+价格：
+
+​	个人版：$2.99/月
+
+​	家庭版：$4.99/月
+
+​	团队/企业版：$3.99-US$59.99/月
+
+App安装次数：1,000,000+（免费下载安装、App内付费）
+
+Google Play评论次数：31,174+
+
+
+
+个人版：Trusted by over 15 million users（From官网）
+
+家庭版：Loved and used by millions.（From官网）
+
+企业版：More than 70,000 businesses trust 1Password to secure their business and protect their data.  （From官网）
+
+
+  
 
 ### 产品用户描述
 
@@ -111,6 +139,8 @@
 ### 关键发展事件
 
 ### 关键历史阶段
+
+https://www.xianjichina.com/special/detail_431676.html
 
 ## 结论
 
