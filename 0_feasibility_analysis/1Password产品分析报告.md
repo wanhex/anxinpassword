@@ -101,26 +101,44 @@ The world’s most-loved password manager
 
 价格：
 
-​	个人版：$2.99/月
+- 个人版：$2.99/月
 
-​	家庭版：$4.99/月
+- 家庭版：$4.99/月
 
-​	团队/企业版：$3.99-US$59.99/月
-
-App安装次数：1,000,000+（免费下载安装、App内付费）
-
-Google Play评论次数：31,174+
+- 团队/企业版：$3.99-US$59.99/月
 
 
+GooglePlay数据：
 
-个人版：Trusted by over 15 million users（From官网）
-
-家庭版：Loved and used by millions.（From官网）
-
-企业版：More than 70,000 businesses trust 1Password to secure their business and protect their data.  （From官网）
+- App安装次数：1,000,000+（免费下载安装、App内付费）
+- Google Play评论次数：31,174+
 
 
-  
+官网数据：
+
+- 个人版：Trusted by over 15 million users
+
+- 家庭版：Loved and used by millions.
+
+- 企业版：More than 70,000 businesses trust 1Password to secure their business and protect their data.  
+
+
+1Password于2005年在多伦多成立，1Password最初只是针对消费者，截止2019年， 14 years里，1Password一直在保持增长。
+
+Shiner于2011年成为了1Password的首席执行官，根据他之前的B2B背景，开始着手进军B2B。
+
+因此消费市场至少增长了6年。
+
+2016年5月，1Password开始向企业提供服务，截止到Nov 14, 2019，大约有5万客户在使用企业服务Enterprise Password Manager，2016~2019，企业用户增长300%。
+
+https://blog.1password.com/accel-partnership/
+
+https://www.lieyunwang.com/archives/460750
+
+2019-11，获2亿美元投资，A轮融资，领投方为Accel。
+
+
+
 
 ### 产品用户描述
 
@@ -141,6 +159,8 @@ Google Play评论次数：31,174+
 ### 关键历史阶段
 
 https://www.xianjichina.com/special/detail_431676.html
+
+https://www.lieyunwang.com/archives/460750
 
 ## 结论
 
