@@ -122,7 +122,6 @@ GooglePlay数据：
 
 - 企业版：More than 70,000 businesses trust 1Password to secure their business and protect their data.  
 
-
 1Password于2005年在多伦多成立，1Password最初只是针对消费者，截止2019年， 14 years里，1Password一直在保持增长。
 
 Shiner于2011年成为了1Password的首席执行官，根据他之前的B2B背景，开始着手进军B2B。
@@ -137,7 +136,15 @@ https://www.lieyunwang.com/archives/460750
 
 2019-11，获2亿美元投资，A轮融资，领投方为Accel。
 
+https://robo.datayes.com/v2/details/report/4016892?tab=original
 
+2019-11，估值：65 亿人民币。
+
+![1612415962558](1Password产品分析报告.assets/1612415962558.png)
+
+![1612415920274](1Password产品分析报告.assets/1612415920274.png)
+
+https://www.crunchbase.com/organization/1password/technology
 
 
 ### 产品用户描述
