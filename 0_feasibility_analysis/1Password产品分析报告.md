@@ -2,12 +2,13 @@
 
 ## 修订记录
 
-| 日期       | 修订版本 | 修订描述             | 修订人 |
-| ---------- | -------- | -------------------- | ------ |
-| 2021-01-05 | v0.5     | 创建                 | wanhex |
-| 2021-01-10 | v0.5.5   | 增加目的和产品描述   | wanhex |
-| 2021-02-02 | v0.5.8   | 增加产品逻辑描述     | wanhex |
-| 2021-02-02 | v0.6.0   | 增加功能列表思维导图 | wanhex |
+| 日期       | 修订版本 | 修订描述                           | 修订人 |
+| ---------- | -------- | ---------------------------------- | ------ |
+| 2021-01-05 | v0.5     | 创建                               | wanhex |
+| 2021-01-10 | v0.5.5   | 增加目的和产品描述                 | wanhex |
+| 2021-02-02 | v0.5.8   | 增加产品逻辑描述                   | wanhex |
+| 2021-02-02 | v0.6.0   | 增加功能列表思维导图               | wanhex |
+| 2021-02-05 | v0.6.3   | 增加产品运营数据，以及对数据的解读 | wanhex |
 
 ## 目的
 
@@ -122,30 +123,53 @@ GooglePlay数据：
 
 - 企业版：More than 70,000 businesses trust 1Password to secure their business and protect their data.  
 
+
+
+以下内容来源于1Password公开博客：
+
 1Password于2005年在多伦多成立，1Password最初只是针对消费者，截止2019年， 14 years里，1Password一直在保持增长。
 
 Shiner于2011年成为了1Password的首席执行官，根据他之前的B2B背景，开始着手进军B2B。
 
-因此消费市场至少增长了6年。
-
 2016年5月，1Password开始向企业提供服务，截止到Nov 14, 2019，大约有5万客户在使用企业服务Enterprise Password Manager，2016~2019，企业用户增长300%。
+
+
+
+因此推断，在2011年以前，1Password在消费市场可能持续增长了6年。在遇到增长瓶颈时（2011年左右），着手进军企业市场。
+
+企业市场方面，2011~2016是企业市场冷启动阶段，2016~2019末企业用户增长300%，2019年约有5万企业用户。而根据官网数据，截止到2021年初，企业市场约有7万用户，从2019末~2021初企业用户增长40%（数据表现很棒）
+
+数据来源：
 
 https://blog.1password.com/accel-partnership/
 
 https://www.lieyunwang.com/archives/460750
 
-2019-11，获2亿美元投资，A轮融资，领投方为Accel。
 
-https://robo.datayes.com/v2/details/report/4016892?tab=original
 
-2019-11，估值：65 亿人民币。
+其他增长相关数据：
 
 ![1612415962558](1Password产品分析报告.assets/1612415962558.png)
 
+如图，1Password主要增长来源在美国和加拿大，美国的访问量增加可能与企业服务有关。如果将美国和加拿大的增长模式复制到其他国家，数据可能还会迎来大规模增长。
+
+数据来源：https://www.crunchbase.com/organization/1password/technology
+
 ![1612415920274](1Password产品分析报告.assets/1612415920274.png)
 
-https://www.crunchbase.com/organization/1password/technology
+如图，1Password的PV数较同期增长了2.41%，用户时长增幅较大。
 
+数据来源：https://www.crunchbase.com/organization/1password/technology
+
+![1612495280426](1Password产品分析报告.assets/1612495280426.png)
+
+如图，1Password的UV增长缓慢，但用户时长增幅较大。
+
+该数据来源：https://www.semrush.com/analytics/traffic/overview/1password.com?searchType=domain
+
+综上：
+
+当前1Password正积极发力企业市场，由于之前的消费用户基数过高，几万数量企业用户带来的UV增长不是很明显，但由于企业用户的特殊性（频繁使用1Password），会导致1Password的用户时长大幅增加。而大年的企业市场主要增长来源可能主要分布在加拿大和美国。一旦时机成熟，将成功模式复制到其他国家会迎来大规模增长。
 
 ### 产品用户描述
 
@@ -168,6 +192,12 @@ https://www.crunchbase.com/organization/1password/technology
 https://www.xianjichina.com/special/detail_431676.html
 
 https://www.lieyunwang.com/archives/460750
+
+2019-11，获2亿美元投资，A轮融资，领投方为Accel。
+
+https://robo.datayes.com/v2/details/report/4016892?tab=original
+
+2019-11，估值：65 亿人民币。
 
 ## 结论
 
