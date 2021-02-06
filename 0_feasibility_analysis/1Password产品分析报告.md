@@ -171,6 +171,28 @@ https://www.lieyunwang.com/archives/460750
 
 当前1Password正积极发力企业市场，由于之前的消费用户基数过高，几万数量企业用户带来的UV增长不是很明显，但由于企业用户的特殊性（频繁使用1Password），会导致1Password的用户时长大幅增加。而大年的企业市场主要增长来源可能主要分布在加拿大和美国。一旦时机成熟，将成功模式复制到其他国家会迎来大规模增长。
 
+### 竞品运营数据
+
+竞品包括：LastPass、KeePass、Enpass、EasyPass、RoboForm、钥匙串。
+
+LastPass数据：
+
+![1612585292927](1Password产品分析报告.assets/1612585292927.png)
+
+KeePass：
+
+![1612585652709](1Password产品分析报告.assets/1612585652709.png)
+
+Enpass：
+
+![1612585797398](1Password产品分析报告.assets/1612585797398.png)
+
+Roboform：
+
+![1612585943551](1Password产品分析报告.assets/1612585943551.png)
+
+从MAU数据看，密码管理软件市场
+
 ### 产品用户描述
 
 #### 用户画像
