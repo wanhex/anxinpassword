@@ -176,19 +176,31 @@ https://www.lieyunwang.com/archives/460750
 
 竞品包括：LastPass、KeePass、Enpass、EasyPass、RoboForm、钥匙串。
 
-LastPass数据：
+#### LastPass数据
+
+价格：$3*/month
+
+产品数据：
 
 ![1612585292927](1Password产品分析报告.assets/1612585292927.png)
 
-KeePass：
+#### KeePass数据
+
+价格：开源免费。
+
+产品数据：
 
 ![1612585652709](1Password产品分析报告.assets/1612585652709.png)
 
-Enpass：
+#### Enpass数据
+
+价格：￥14.25/mo，≈1.99美元
 
 ![1612585797398](1Password产品分析报告.assets/1612585797398.png)
 
-Roboform：
+#### Roboform数据
+
+价格：美元1.99/月
 
 ![1612585943551](1Password产品分析报告.assets/1612585943551.png)
 
@@ -197,6 +209,10 @@ Roboform：
 ![1612623060132](1Password产品分析报告.assets/1612623060132.png)
 
 ### 产品用户描述
+
+1Password用户主要分为三类：个人用户、家庭用户、团队/企业用户。
+
+本次产品分析主要关注个人用户，因此暂只考虑个人用户的画像。
 
 #### 用户画像
 
