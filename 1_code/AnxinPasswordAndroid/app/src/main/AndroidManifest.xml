@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AnxinPassword">
         <activity
+            android:name=".add.PasswordAddActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

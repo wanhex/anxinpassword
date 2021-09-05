@@ -55,7 +55,7 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.ViewHo
         Password password = mPasswordList.get(pos);
         holder.accountImage.setImageResource(password.getImageId());
         holder.summary.setText(password.getSummary());
-        holder.timeStamp.setText(password.getTimeStamp());
+        holder.timeStamp.setText(password.getTimeStampStr());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
