@@ -1,6 +1,5 @@
 package com.wanhex.anxinpassword;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.wanhex.anxinpassword.db.Password;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.ViewHo
         int pos = position;
         Password password = mPasswordList.get(pos);
         holder.accountImage.setImageResource(password.getImageId());
-        holder.summary.setText(password.getSummary());
+        holder.summary.setText(password.getSummary() + pos);
         holder.timeStamp.setText(password.getTimeStampStr());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

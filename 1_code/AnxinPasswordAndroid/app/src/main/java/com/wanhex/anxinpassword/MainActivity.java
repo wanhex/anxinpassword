@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 
 import com.wanhex.anxinpassword.add.PasswordAddActivity;
 import com.wanhex.anxinpassword.databinding.ActivityMainBinding;
+import com.wanhex.anxinpassword.db.AppDatabase;
+import com.wanhex.anxinpassword.db.Password;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ActivityMainBinding binding;
+    private ActivityResultLauncher mActivityResultLauncher;
+    private Handler mHandler = new Handler();
 
     private List<Password> mPasswordList = new ArrayList<>();
 
     private RecyclerView mPasswordListView;
-
-    private ActivityResultLauncher mActivityResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
         PasswordAdapter adapter = new PasswordAdapter(mPasswordList);
         mPasswordListView.setAdapter(adapter);
 
-        mPasswordList.add(new Password());
-        mPasswordList.add(new Password());
+        loadPasswords();
 
         adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -66,10 +68,32 @@ public class MainActivity extends AppCompatActivity {
             public void onActivityResult(ActivityResult result) {
                 Intent data = result.getData();
                 int resultCode = result.getResultCode();
-                Toast.makeText(MainActivity.this, "xxxxxxxxxxxx", Toast.LENGTH_SHORT).show();
+                if (resultCode != RESULT_OK) {
+                    return;
+                }
+                Password passwordNew = (Password) data.getExtras().get("password_new");
+                if (passwordNew == null) {
+                    return;
+                }
+
+                mPasswordList.add(0, passwordNew);
             }
         });
 
+    }
+
+    private void loadPasswords() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                MyApp app = (MyApp)getApplication();
+                AppDatabase appDatabase = app.getPasswordDb();
+                List<Password> passwordList = appDatabase.passwordDao().getAll();
+                mPasswordList.addAll(passwordList);
+
+            }
+        }.start();
     }
 
     @Override
