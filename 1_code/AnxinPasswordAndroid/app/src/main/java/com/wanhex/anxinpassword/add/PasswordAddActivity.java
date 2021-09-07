@@ -7,13 +7,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.wanhex.anxinpassword.MyApp;
 import com.wanhex.anxinpassword.R;
 import com.wanhex.anxinpassword.db.AppDatabase;
 import com.wanhex.anxinpassword.db.Password;
+
+import java.util.Random;
 
 public class PasswordAddActivity extends AppCompatActivity {
 
@@ -23,6 +27,8 @@ public class PasswordAddActivity extends AppCompatActivity {
     private EditText mUsernameEt;
     private EditText mPasswordEt;
     private EditText mCommentsEt;
+
+    private ImageButton mRandomBtn;
 
     private Handler mHandler = new Handler();
 
@@ -36,6 +42,55 @@ public class PasswordAddActivity extends AppCompatActivity {
         mUsernameEt = findViewById(R.id.et_username);
         mPasswordEt = findViewById(R.id.et_passwd);
         mCommentsEt = findViewById(R.id.et_comments);
+        mRandomBtn = findViewById(R.id.ib_random_btn);
+
+        mRandomBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPasswordEt.setText(genRandomNum());
+            }
+        });
+    }
+
+    private String genRandomNum(){
+        int  maxNum = 36;
+        int i;
+        int count = 0;
+        char[] str0 = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+                'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
+                'x', 'y', 'z'};
+        char[] str1 = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+                'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W'};
+        char[] str2 = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+        char[] str3 = { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')' };
+
+        StringBuilder pwd = new StringBuilder("");
+        Random r = new Random();
+
+        for (int j=0; j<2; j++) {
+
+            i = Math.abs(r.nextInt(str0.length));
+            pwd.append(str0[i]);
+            i = Math.abs(r.nextInt(str0.length));
+            pwd.append(str0[i]);
+
+            i = Math.abs(r.nextInt(str1.length));
+            pwd.append(str1[i]);
+            i = Math.abs(r.nextInt(str1.length));
+            pwd.append(str1[i]);
+
+            i = Math.abs(r.nextInt(str2.length));
+            pwd.append(str2[i]);
+            i = Math.abs(r.nextInt(str2.length));
+            pwd.append(str2[i]);
+
+            i = Math.abs(r.nextInt(str3.length));
+            pwd.append(str3[i]);
+            i = Math.abs(r.nextInt(str3.length));
+            pwd.append(str3[i]);
+        }
+
+        return pwd.toString();
     }
 
     @Override
@@ -54,6 +109,8 @@ public class PasswordAddActivity extends AppCompatActivity {
                         mPasswordEt.getText().toString(),
                         mCommentsEt.getText().toString()
                 );
+                mPassword.timeStamp = System.currentTimeMillis();
+                mPassword.abbreviatedUserName = mPassword.getAbbreviatedUserName();
                 save(mPassword);
                 break;
             default:

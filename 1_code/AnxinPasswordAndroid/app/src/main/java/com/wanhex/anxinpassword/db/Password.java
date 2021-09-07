@@ -9,6 +9,9 @@ import androidx.room.PrimaryKey;
 
 import com.wanhex.anxinpassword.R;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
 @Entity
 public class Password implements Parcelable {
 
@@ -57,8 +60,18 @@ public class Password implements Parcelable {
         timeStamp = in.readLong();
     }
 
+    public String getAbbreviatedUserName() {
+        if (username.isEmpty()) {
+            return "****";
+        }
+        return username.charAt(0) + "***";
+    }
+
     public String getTimeStampStr() {
-        return "timeStamp";
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//定义格式，不显示毫秒
+        Timestamp now = new Timestamp(timeStamp);//获取系统当前时间
+        String str = df.format(now);
+        return str;
     }
 
     public int getImageId() {
@@ -66,7 +79,7 @@ public class Password implements Parcelable {
     }
 
     public String getSummary() {
-        return "Summary";
+        return getAbbreviatedUserName() + "@" + site;
     }
 
     @Override

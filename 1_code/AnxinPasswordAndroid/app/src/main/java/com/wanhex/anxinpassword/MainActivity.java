@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private Handler mHandler = new Handler();
 
     private List<Password> mPasswordList = new ArrayList<>();
+    PasswordAdapter mAdapter;
 
     private RecyclerView mPasswordListView;
 
@@ -50,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mPasswordListView.setLayoutManager(layoutManager);
-        PasswordAdapter adapter = new PasswordAdapter(mPasswordList);
-        mPasswordListView.setAdapter(adapter);
+        mAdapter = new PasswordAdapter(mPasswordList);
+        mPasswordListView.setAdapter(mAdapter);
 
         loadPasswords();
 
-        adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -77,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 mPasswordList.add(0, passwordNew);
+                mAdapter = new PasswordAdapter(mPasswordList);
+                mPasswordListView.setAdapter(mAdapter);
             }
         });
 
