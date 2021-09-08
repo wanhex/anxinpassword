@@ -2,15 +2,18 @@ package com.wanhex.anxinpassword.add;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.wanhex.anxinpassword.MyApp;
 import com.wanhex.anxinpassword.R;
@@ -19,8 +22,9 @@ import com.wanhex.anxinpassword.db.Password;
 
 import java.util.Random;
 
-public class PasswordAddActivity extends AppCompatActivity {
+public class PasswordAddActivity extends AppCompatActivity implements TextWatcher {
 
+    private boolean mHasTextChanged;
     private Password mPassword;
 
     private EditText mSiteEt;
@@ -50,24 +54,29 @@ public class PasswordAddActivity extends AppCompatActivity {
                 mPasswordEt.setText(genRandomNum());
             }
         });
+
+        mSiteEt.addTextChangedListener(this);
+        mUsernameEt.addTextChangedListener(this);
+        mPasswordEt.addTextChangedListener(this);
+        mCommentsEt.addTextChangedListener(this);
     }
 
-    private String genRandomNum(){
-        int  maxNum = 36;
+    private String genRandomNum() {
+        int maxNum = 36;
         int i;
         int count = 0;
-        char[] str0 = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+        char[] str0 = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
                 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
                 'x', 'y', 'z'};
-        char[] str1 = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+        char[] str1 = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
                 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W'};
-        char[] str2 = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-        char[] str3 = { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')' };
+        char[] str2 = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        char[] str3 = {'!', '@', '#', '$', '%', '^', '&', '*', '(', ')'};
 
         StringBuilder pwd = new StringBuilder("");
         Random r = new Random();
 
-        for (int j=0; j<2; j++) {
+        for (int j = 0; j < 2; j++) {
 
             i = Math.abs(r.nextInt(str0.length));
             pwd.append(str0[i]);
@@ -119,6 +128,28 @@ public class PasswordAddActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mHasTextChanged) {
+            new AlertDialog.Builder(this)
+                    .setMessage("要放弃本次新增的密码吗？")
+                    .setPositiveButton("是的", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    }).show();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void save(Password password) {
 
         boolean isSomethingEmpty = false;
@@ -145,7 +176,7 @@ public class PasswordAddActivity extends AppCompatActivity {
             @Override
             public void run() {
                 super.run();
-                MyApp app = (MyApp)getApplication();
+                MyApp app = (MyApp) getApplication();
                 AppDatabase appDatabase = app.getPasswordDb();
                 try {
                     appDatabase.passwordDao().insert(password);
@@ -165,5 +196,20 @@ public class PasswordAddActivity extends AppCompatActivity {
                 });
             }
         }.start();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        mHasTextChanged = true;
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Dao
 public interface PasswordDao {
 
-    @Query("SELECT * FROM password")
+    @Query("SELECT * FROM password order by timestamp desc")
     List<Password> getAll();
 
     @Query("SELECT * FROM password WHERE id IN (:ids)")
