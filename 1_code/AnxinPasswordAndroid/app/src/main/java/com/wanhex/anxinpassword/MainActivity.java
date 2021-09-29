@@ -21,6 +21,7 @@ import com.wanhex.anxinpassword.add.PasswordAddActivity;
 import com.wanhex.anxinpassword.databinding.ActivityMainBinding;
 import com.wanhex.anxinpassword.db.AppDatabase;
 import com.wanhex.anxinpassword.db.Password;
+import com.wanhex.anxinpassword.edit.PasswordEditActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, PasswordEditActivity.class);
+                intent.putExtra("password", mPasswordList.get(position));
+                mActivityResultLauncher.launch(intent);
             }
         });
 
@@ -73,13 +76,28 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 Password passwordNew = (Password) data.getExtras().get("password_new");
-                if (passwordNew == null) {
+                if (passwordNew != null) {
+                    mPasswordList.add(0, passwordNew);
+                    mAdapter.notifyDataSetChanged();
                     return;
                 }
+                Password passwordEdit = (Password) data.getExtras().get("password_edit");
+                if (passwordEdit != null) {
+                    for (int i=0; i<mPasswordList.size(); i++) {
+                        Password passwordInList = mPasswordList.get(i);
+                        if (passwordInList.id == passwordEdit.id) {
+                            passwordInList.site = passwordEdit.site;
+                            passwordInList.username = passwordEdit.username;
+                            passwordInList.abbreviatedUserName = passwordEdit.abbreviatedUserName;
+                            passwordInList.password = passwordEdit.password;
+                            passwordInList.comments = passwordEdit.comments;
 
-                mPasswordList.add(0, passwordNew);
-                mAdapter = new PasswordAdapter(mPasswordList);
-                mPasswordListView.setAdapter(mAdapter);
+                            mAdapter.notifyItemChanged(i);
+                            break;
+                        }
+                    }
+                }
+
             }
         });
 
@@ -94,6 +112,13 @@ public class MainActivity extends AppCompatActivity {
                 AppDatabase appDatabase = app.getPasswordDb();
                 List<Password> passwordList = appDatabase.passwordDao().getAll();
                 mPasswordList.addAll(passwordList);
+
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
 
             }
         }.start();

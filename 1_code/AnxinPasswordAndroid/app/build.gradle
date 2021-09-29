@@ -70,4 +70,7 @@ dependencies {
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
+    implementation "net.zetetic:android-database-sqlcipher:4.4.3"
+
+
 }

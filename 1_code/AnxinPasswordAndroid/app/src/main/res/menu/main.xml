@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/add_password"
-        android:icon="@mipmap/title_bar_list_new_icon"
+        android:icon="@drawable/ic_action_add"
         android:title="新增密码"
         app:showAsAction="always" />
 </menu>
