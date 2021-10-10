@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.KeyguardManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mPasswordListView;
 
+    private boolean hasKeyguardVerified = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,11 +74,25 @@ public class MainActivity extends AppCompatActivity {
         mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
+
                 Intent data = result.getData();
                 int resultCode = result.getResultCode();
                 if (resultCode != RESULT_OK) {
                     return;
                 }
+
+                if (data == null) {
+                    hasKeyguardVerified = true;
+                    Toast.makeText(MainActivity.this, "锁屏密码验证成功！", Toast.LENGTH_SHORT).show();
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hasKeyguardVerified = false;
+                        }
+                    }, 600000);
+                    return;
+                }
+
                 Password passwordNew = (Password) data.getExtras().get("password_new");
                 if (passwordNew != null) {
                     mPasswordList.add(0, passwordNew);
@@ -100,6 +118,23 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (!hasKeyguardVerified){
+            KeyguardManager mKeyguardMgr = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                mKeyguardMgr = getSystemService(KeyguardManager.class);
+                Intent intent = mKeyguardMgr.createConfirmDeviceCredentialIntent(null, null);
+                if (intent != null) {
+                    mActivityResultLauncher.launch(intent);
+                }
+            }
+        }
 
     }
 
