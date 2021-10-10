@@ -15,6 +15,8 @@
         <activity
             android:name=".edit.PasswordEditActivity"/>
         <activity
+            android:name=".settings.SettingsActivity"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

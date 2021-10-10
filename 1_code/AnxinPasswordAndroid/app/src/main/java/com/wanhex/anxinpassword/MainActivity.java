@@ -25,6 +25,7 @@ import com.wanhex.anxinpassword.databinding.ActivityMainBinding;
 import com.wanhex.anxinpassword.db.AppDatabase;
 import com.wanhex.anxinpassword.db.Password;
 import com.wanhex.anxinpassword.edit.PasswordEditActivity;
+import com.wanhex.anxinpassword.settings.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,6 +166,9 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.add_password:
                 mActivityResultLauncher.launch(new Intent(this, PasswordAddActivity.class));
+                break;
+            case R.id.settings:
+                mActivityResultLauncher.launch(new Intent(this, SettingsActivity.class));
                 break;
             default:
                 break;

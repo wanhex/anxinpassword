@@ -6,4 +6,9 @@
         android:icon="@drawable/ic_action_add"
         android:title="新增密码"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_action_settings"
+        android:title="设置"
+        app:showAsAction="always" />
 </menu>

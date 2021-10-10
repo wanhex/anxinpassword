@@ -3,4 +3,5 @@
     <string name="password_add">新增密码</string>
     <string name="password_view">查看密码</string>
     <string name="password_edit">编辑密码</string>
+    <string name="settings">设置</string>
 </resources>
