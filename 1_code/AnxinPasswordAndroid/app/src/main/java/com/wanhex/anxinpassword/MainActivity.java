@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.wanhex.anxinpassword.add.PasswordAddActivity;
+import com.wanhex.anxinpassword.cipher.KeyguardVerifyUtil;
 import com.wanhex.anxinpassword.databinding.ActivityMainBinding;
 import com.wanhex.anxinpassword.db.AppDatabase;
 import com.wanhex.anxinpassword.db.Password;
@@ -39,11 +40,11 @@ public class MainActivity extends AppCompatActivity {
     private Handler mHandler = new Handler();
 
     private List<Password> mPasswordList = new ArrayList<>();
-    PasswordAdapter mAdapter;
+    private PasswordAdapter mAdapter;
 
     private RecyclerView mPasswordListView;
+    private boolean mKeyguardVerified;
 
-    private boolean hasKeyguardVerified = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,18 +82,6 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (data == null) {
-                    hasKeyguardVerified = true;
-                    Toast.makeText(MainActivity.this, "锁屏密码验证成功！", Toast.LENGTH_SHORT).show();
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            hasKeyguardVerified = false;
-                        }
-                    }, 600000);
-                    return;
-                }
-
                 Password passwordNew = (Password) data.getExtras().get("password_new");
                 if (passwordNew != null) {
                     mPasswordList.add(0, passwordNew);
@@ -119,23 +108,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        KeyguardVerifyUtil.setOnKeyguardVerifiedListener(this, new KeyguardVerifyUtil.OnKeyguardVerifiedListener() {
+            @Override
+            public void onKeyguardVerifyResult(boolean keyguardVerified) {
+                mKeyguardVerified = keyguardVerified;
+                if (keyguardVerified) {
+                    KeyguardVerifyUtil.updatePassTime(MainActivity.this);
+                }
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        KeyguardVerifyUtil.checkKeyguard(this);
+    }
 
-        if (!hasKeyguardVerified){
-            KeyguardManager mKeyguardMgr = null;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                mKeyguardMgr = getSystemService(KeyguardManager.class);
-                Intent intent = mKeyguardMgr.createConfirmDeviceCredentialIntent(null, null);
-                if (intent != null) {
-                    mActivityResultLauncher.launch(intent);
-                }
-            }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mKeyguardVerified) {
+            KeyguardVerifyUtil.updatePassTime(this);
         }
-
     }
 
     private void loadPasswords() {

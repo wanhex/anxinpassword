@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.wanhex.anxinpassword.MyApp;
 import com.wanhex.anxinpassword.R;
+import com.wanhex.anxinpassword.add.PasswordAddActivity;
+import com.wanhex.anxinpassword.cipher.KeyguardVerifyUtil;
 import com.wanhex.anxinpassword.cipher.RandomUntil;
 import com.wanhex.anxinpassword.db.AppDatabase;
 import com.wanhex.anxinpassword.db.Password;
@@ -30,6 +32,7 @@ public class PasswordEditActivity extends AppCompatActivity implements TextWatch
 
     private boolean mHasTextChanged;
     private Password mPassword;
+    private boolean mKeyguardVerified;
 
     private Menu mMenu;
 
@@ -93,6 +96,31 @@ public class PasswordEditActivity extends AppCompatActivity implements TextWatch
         mUsernameEt.addTextChangedListener(this);
         mPasswordEt.addTextChangedListener(this);
         mCommentsEt.addTextChangedListener(this);
+
+        mKeyguardVerified = true;
+        KeyguardVerifyUtil.setOnKeyguardVerifiedListener(this, new KeyguardVerifyUtil.OnKeyguardVerifiedListener() {
+            @Override
+            public void onKeyguardVerifyResult(boolean keyguardVerified) {
+                mKeyguardVerified = keyguardVerified;
+                if (keyguardVerified) {
+                    KeyguardVerifyUtil.updatePassTime(PasswordEditActivity.this);
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        KeyguardVerifyUtil.checkKeyguard(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mKeyguardVerified) {
+            KeyguardVerifyUtil.updatePassTime(this);
+        }
     }
 
     @Override
