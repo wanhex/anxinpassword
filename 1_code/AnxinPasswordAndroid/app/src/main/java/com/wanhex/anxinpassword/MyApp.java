@@ -2,9 +2,12 @@ package com.wanhex.anxinpassword;
 
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import androidx.room.Room;
 
+import com.wanhex.anxinpassword.cipher.CipherUtil;
+import com.wanhex.anxinpassword.cipher.RandomUntil;
 import com.wanhex.anxinpassword.db.AppDatabase;
 
 import net.sqlcipher.database.SupportFactory;
@@ -16,7 +19,9 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        SupportFactory factory = new SupportFactory("123456".getBytes());
+
+        byte[] mainDbPasswordBytes = CipherUtil.getMainDbPassword(getApplicationContext());
+        SupportFactory factory = new SupportFactory(mainDbPasswordBytes);
 
         mPasswordDb = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "passwords.sqlite").openHelperFactory(factory).build();

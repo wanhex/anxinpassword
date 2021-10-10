@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 
 import com.wanhex.anxinpassword.MyApp;
 import com.wanhex.anxinpassword.R;
+import com.wanhex.anxinpassword.cipher.RandomUntil;
 import com.wanhex.anxinpassword.db.AppDatabase;
 import com.wanhex.anxinpassword.db.Password;
 
@@ -51,7 +52,7 @@ public class PasswordAddActivity extends AppCompatActivity implements TextWatche
         mRandomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPasswordEt.setText(genRandomNum());
+                mPasswordEt.setText(RandomUntil.getNumLargeSmallLetter(8));
             }
         });
 
@@ -59,47 +60,6 @@ public class PasswordAddActivity extends AppCompatActivity implements TextWatche
         mUsernameEt.addTextChangedListener(this);
         mPasswordEt.addTextChangedListener(this);
         mCommentsEt.addTextChangedListener(this);
-    }
-
-    private String genRandomNum() {
-        int maxNum = 36;
-        int i;
-        int count = 0;
-        char[] str0 = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
-                'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
-                'x', 'y', 'z'};
-        char[] str1 = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
-                'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W'};
-        char[] str2 = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-        char[] str3 = {'!', '@', '#', '$', '%', '^', '&', '*', '(', ')'};
-
-        StringBuilder pwd = new StringBuilder("");
-        Random r = new Random();
-
-        for (int j = 0; j < 2; j++) {
-
-            i = Math.abs(r.nextInt(str0.length));
-            pwd.append(str0[i]);
-            i = Math.abs(r.nextInt(str0.length));
-            pwd.append(str0[i]);
-
-            i = Math.abs(r.nextInt(str1.length));
-            pwd.append(str1[i]);
-            i = Math.abs(r.nextInt(str1.length));
-            pwd.append(str1[i]);
-
-            i = Math.abs(r.nextInt(str2.length));
-            pwd.append(str2[i]);
-            i = Math.abs(r.nextInt(str2.length));
-            pwd.append(str2[i]);
-
-            i = Math.abs(r.nextInt(str3.length));
-            pwd.append(str3[i]);
-            i = Math.abs(r.nextInt(str3.length));
-            pwd.append(str3[i]);
-        }
-
-        return pwd.toString();
     }
 
     @Override
