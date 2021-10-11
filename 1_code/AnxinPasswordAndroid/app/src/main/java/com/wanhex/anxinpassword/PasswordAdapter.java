@@ -19,6 +19,7 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.ViewHo
     private List<Password> mPasswordList;
 
     private AdapterView.OnItemClickListener mOnItemClickListener;
+    private AdapterView.OnItemLongClickListener mOnItemLongClickListener;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout rootLayout;
@@ -36,6 +37,10 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.ViewHo
 
     public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
+    }
+
+    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
+        this.mOnItemLongClickListener = onItemLongClickListener;
     }
 
     public PasswordAdapter(List<Password> passwordList) {
@@ -62,6 +67,14 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 mOnItemClickListener.onItemClick(null, holder.itemView, pos, pos);
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                mOnItemLongClickListener.onItemLongClick(null, holder.itemView, pos, pos);
+                return true;
             }
         });
     }

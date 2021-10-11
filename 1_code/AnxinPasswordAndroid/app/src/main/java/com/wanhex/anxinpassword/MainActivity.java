@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.KeyguardManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,6 +64,43 @@ public class MainActivity extends AppCompatActivity {
         mPasswordListView.setAdapter(mAdapter);
 
         loadPasswords();
+
+        mAdapter.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setMessage("要删除 " + mPasswordList.get(i).site+ " 吗？")
+                        .setPositiveButton("是的", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                new Thread() {
+                                    @Override
+                                    public void run() {
+                                        super.run();
+                                        MyApp app = (MyApp) getApplication();
+                                        AppDatabase appDatabase = app.getPasswordDb();
+                                        appDatabase.passwordDao().delete(mPasswordList.get(i));
+
+                                        mHandler.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                mPasswordList.remove(i);
+                                                mAdapter.notifyDataSetChanged();
+                                            }
+                                        });
+                                    }
+                                }.start();
+
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).show();
+                return false;
+            }
+        });
 
         mAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
