@@ -7,35 +7,44 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.wanhex.anxinpassword.R;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 @Entity
-public class Password implements Parcelable {
+public
+class Password implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    @JSONField(name = "category")
     @ColumnInfo(name = "category")
     public String category;
 
+    @JSONField(name = "site")
     @ColumnInfo(name = "site")
     public String site;
 
+    @JSONField(name = "abbrev_username")
     @ColumnInfo(name = "abbrev_username")
     public String abbreviatedUserName;
 
+    @JSONField(name = "username")
     @ColumnInfo(name = "username")
     public String username;
 
+    @JSONField(name = "password")
     @ColumnInfo(name = "password")
     public String password;
 
+    @JSONField(name = "comments")
     @ColumnInfo(name = "comments")
     public String comments;
 
+    @JSONField(name = "timestamp")
     @ColumnInfo(name = "timestamp")
     public long timeStamp;
 

@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <RelativeLayout
                 android:id="@+id/rlyt_baidu_yun"
                 android:onClick="onBaiduYunBtnClicked"
@@ -23,7 +24,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="1px"
                 android:focusable="true"
-                android:background="@drawable/selector_settings_single_btn">
+                android:background="@drawable/selector_edittext_top">
 
                 <TextView
                     android:id="@+id/tv_baidu_yun_label"
@@ -52,6 +53,69 @@
 
                 <ImageView
                     android:id="@+id/iv_nav_right1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_action_nav_next"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlyt_sync"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginBottom="1px"
+                android:focusable="true"
+                android:background="@drawable/selector_edittext_middle">
+
+                <TextView
+                    android:id="@+id/tv_sync_label"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:text="自动备份（本机->百度云盘）"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Switch
+                    android:id="@+id/btn_switch"
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textOn="开启"
+                    android:textOff="关闭"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlyt_restore"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginBottom="1px"
+                android:focusable="true"
+                android:onClick="onRestoreBtnClicked"
+                android:background="@drawable/selector_edittext_bottom">
+
+                <TextView
+                    android:id="@+id/tv_restore_label"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:text="数据还原（百度云盘->本机）"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/iv_nav_right3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -110,8 +174,8 @@
 
     <WebView
         android:id="@+id/wv"
-        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layerType="software" />
+        android:layerType="software"
+        android:visibility="invisible" />
 </RelativeLayout>
