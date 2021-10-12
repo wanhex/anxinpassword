@@ -2,10 +2,18 @@ package com.wanhex.anxinpassword.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.baidu.oauth.sdk.auth.AuthInfo;
@@ -15,6 +23,7 @@ import com.baidu.oauth.sdk.callback.BdOauthCallback;
 import com.baidu.oauth.sdk.dto.BdOauthDTO;
 import com.baidu.oauth.sdk.result.BdOauthResult;
 import com.wanhex.anxinpassword.R;
+import com.wanhex.anxinpassword.db.Password;
 
 import java.util.UUID;
 
@@ -35,62 +44,33 @@ public class SettingsActivity extends AppCompatActivity {
         about += AppUtils.getVersionName(this);
         mAboutTv.setHint(about);
 
-        initSdk();
-    }
 
-    /**
-     * 初始化SDK
-     */
-    private void initSdk() {
-        String redirectUrl = "https://passport.baidu.com";
-        String scope = "basic";
-        String appKey = "XXIlWUS6GYbkDIG0OAkGzhEt";
-        AuthInfo authInfo = new AuthInfo(this, appKey, redirectUrl, scope);
-        BdOauthSdk.init(authInfo);
-        authInfo.isDebug(true);
-    }
-
-    BdSsoHandler bdSsoHandler;
-    public void onBaiduYunBtnClicked(View view) {
-//        String appKey = "Ahbwqkr2m3kQzX3tUD280OOS6Zg33q6H";
-//        String redirectUrl = "oob";
-//        String scope = "basic,netdisk";
-//        AuthInfo authInfo = new AuthInfo(this, appKey, redirectUrl, scope);
-
-        bdSsoHandler = new BdSsoHandler(this);
-
-        BdOauthDTO bdOauthDTO = new BdOauthDTO();
-        bdOauthDTO.oauthType = BdOauthDTO.OAUTH_TYPE_BOTH;
-        bdOauthDTO.state = UUID.randomUUID().toString();
-
-        bdSsoHandler.authorize(bdOauthDTO, new BdOauthCallback() {
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
-            public void onSuccess(BdOauthResult result) {
+            public void onActivityResult(ActivityResult result) {
 
-                Toast.makeText(SettingsActivity.this,
-                        "res_code: " + result.getResultCode() + " code = " + result.getCode() + " state = " + result.getState(),
-                        Toast.LENGTH_SHORT).show();
+                Intent data = result.getData();
+                int resultCode = result.getResultCode();
+                if (resultCode != RESULT_OK) {
+                    return;
+                }
 
-            }
+                Log.e("xxxxx", "access_token= " + data.getStringExtra("access_token"));
+                Toast.makeText(SettingsActivity.this, "access_token= " + data.getStringExtra("access_token"), Toast.LENGTH_SHORT).show();
 
-            @Override
-            public void onFailure(BdOauthResult result) {
-                Toast.makeText(SettingsActivity.this, "result code = " + result.getResultCode() + " msg = " + result.getResultMsg(),
-                        Toast.LENGTH_SHORT).show();
 
             }
         });
     }
 
+    ActivityResultLauncher activityResultLauncher;
+
+    public void onBaiduYunBtnClicked(View view) {
+        activityResultLauncher.launch(new Intent(this, BaiduOAuthActivity.class));
+
+    }
+
     public void onAboutBtnClicked(View view) {
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //  因为sdk通过startActivityForResult启动授权页面，所以需要产品线在调用activity接收返回
-        if (bdSsoHandler != null) {
-            bdSsoHandler.authorizeCallBack(requestCode, resultCode, data);
-        }
-    }
 }

@@ -24,6 +24,8 @@
         <activity
             android:name=".settings.SettingsActivity"/>
         <activity
+            android:name=".settings.BaiduOAuthActivity"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
