@@ -4,4 +4,5 @@
     <string name="password_view">查看密码</string>
     <string name="password_edit">编辑密码</string>
     <string name="settings">设置</string>
+    <string name="baidu_login">登录百度账号</string>
 </resources>

@@ -23,7 +23,7 @@ public class BaiduOAuthActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.settings);
+        setTitle(R.string.baidu_login);
         setContentView(R.layout.activity_baidu_oauth);
 
         mWebView = findViewById(R.id.wv);
@@ -60,41 +60,32 @@ public class BaiduOAuthActivity extends AppCompatActivity {
         onBaiduYunBtnClicked(null);
     }
 
+    Runnable mDetectLoginResultRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Log.d("xxx", mWebView.getUrl());
+            String currentUrl = mWebView.getUrl();
+            if (currentUrl.contains("login_success")) {
+                Intent intent = new Intent();
+                String[] params = currentUrl.split("&");
+                for (int i=0; i<params.length; i++) {
+                    if (params[i].contains("access_token")) {
+                        intent.putExtra("access_token", params[i].substring(13));
+                    }
+                }
+                setResult(RESULT_OK, intent);
+                BaiduOAuthActivity.this.finish();
+            } else {
+                mHandler.postDelayed(mDetectLoginResultRunnable, 500);
+            }
+        }
+    };
+
     public void onBaiduYunBtnClicked(View view) {
 
         mWebView.setVisibility(View.VISIBLE);
         mWebView.loadUrl("https://openapi.baidu.com/oauth/2.0/authorize?response_type=token&display=mobile&client_id=Ahbwqkr2m3kQzX3tUD280OOS6Zg33q6H&redirect_uri=oob&scope=netdisk");
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                while (true) {
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.d("xxx", mWebView.getUrl());
-                            String currentUrl = mWebView.getUrl();
-                            if (currentUrl.contains("login_success")) {
-                                Intent intent = new Intent();
-                                String[] params = currentUrl.split("&");
-                                for (int i=0; i<params.length; i++) {
-                                    if (params[i].contains("access_token")) {
-                                        intent.putExtra("access_token", params[i].substring(13));
-                                    }
-                                }
-                                setResult(RESULT_OK, intent);
-                                BaiduOAuthActivity.this.finish();
-                            }
 
-                        }
-                    });
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.start();
+        mHandler.postDelayed(mDetectLoginResultRunnable, 200);
     }
 }
