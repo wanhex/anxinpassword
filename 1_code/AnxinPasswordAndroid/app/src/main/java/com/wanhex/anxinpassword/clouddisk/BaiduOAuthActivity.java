@@ -1,4 +1,4 @@
-package com.wanhex.anxinpassword.settings;
+package com.wanhex.anxinpassword.clouddisk;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,11 +8,9 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.baidu.oauth.sdk.auth.BdSsoHandler;
 import com.wanhex.anxinpassword.R;
 
 public class BaiduOAuthActivity extends AppCompatActivity {

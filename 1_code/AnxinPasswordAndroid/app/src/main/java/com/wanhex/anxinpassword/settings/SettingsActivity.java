@@ -25,6 +25,9 @@ import com.wanhex.anxinpassword.MyApp;
 import com.wanhex.anxinpassword.R;
 import com.wanhex.anxinpassword.cipher.AESEncrypt;
 import com.wanhex.anxinpassword.cipher.KeyStoreUtil;
+import com.wanhex.anxinpassword.clouddisk.BaiduNetDiskSettings;
+import com.wanhex.anxinpassword.clouddisk.BaiduOAuthActivity;
+import com.wanhex.anxinpassword.clouddisk.BaiduYunSync;
 import com.wanhex.anxinpassword.db.AppDatabase;
 import com.wanhex.anxinpassword.db.Password;
 
@@ -65,16 +68,15 @@ public class SettingsActivity extends AppCompatActivity {
         mBaiduYunNameTv = findViewById(R.id.tv_title);
         mSwitchBtn = findViewById(R.id.btn_switch);
 
-        boolean syncSwitch = AppSettings.getBoolean(this, "sync_switch", true);
+        boolean syncSwitch = BaiduNetDiskSettings.getSyncSwitch(this, true);
         mSwitchBtn.setChecked(syncSwitch);
 
         mSwitchBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                AppSettings.setBoolean(SettingsActivity.this, "sync_switch", b);
+                BaiduNetDiskSettings.setSyncSwitch(SettingsActivity.this, b);
                 if (b) {
-                    SharedPreferences sp = getSharedPreferences("baidu_yun", Context.MODE_PRIVATE);
-                    String baiduName = sp.getString("baidu_name", "未登录");
+                    String baiduName = BaiduNetDiskSettings.getBaiduName(SettingsActivity.this);
                     if (!baiduName.equals("未登录")) {
                         syncToBaiduYun();
                     }
@@ -87,16 +89,7 @@ public class SettingsActivity extends AppCompatActivity {
         about += AppUtils.getVersionName(this);
         mAboutTv.setHint(about);
 
-
-        SharedPreferences sp = getSharedPreferences("baidu_yun", Context.MODE_PRIVATE);
-        String baiduName = sp.getString("baidu_name", "未登录");
-        if (!baiduName.equals("未登录")) {
-            try {
-                baiduName = new String(KeyStoreUtil.decrypt(baiduName));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        String baiduName = BaiduNetDiskSettings.getBaiduName(SettingsActivity.this);
         mBaiduYunNameTv.setText(baiduName);
 
         mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -114,70 +107,26 @@ public class SettingsActivity extends AppCompatActivity {
                 String accessToken = data.getStringExtra("access_token");
                 Log.d(TAG, accessToken);
 
-                String url = "https://pan.baidu.com/rest/2.0/xpan/nas?method=uinfo&access_token=xxxxxxxx";
-                url = url.replace("xxxxxxxx", accessToken);
-                OkHttpClient okHttpClient = new OkHttpClient();
-                final Request request = new Request.Builder()
-                        .url(url)
-                        .get()//默认就是GET请求，可以不写
-                        .build();
-                Call call = okHttpClient.newCall(request);
-                call.enqueue(new Callback() {
+                BaiduYunSync.getBaiduName(SettingsActivity.this, accessToken, new BaiduYunSync.OnBaiduUserInfoRecvListener() {
                     @Override
-                    public void onFailure(Call call, IOException e) {
-                        Log.d(TAG, "onFailure: ");
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-
-                        String respStr = response.body().string();
-                        Log.d(TAG, "onResponse: " + respStr);
-
-                        JSONObject jsonObject = (JSONObject) JSON.parse(respStr);
-
-                        String baiduName = jsonObject.getString("baidu_name");
-
-                        SharedPreferences sp = getSharedPreferences("baidu_yun", Context.MODE_PRIVATE);
-                        byte[] encryptedBytes = new byte[0];
-                        try {
-                            encryptedBytes = KeyStoreUtil.encrypt(baiduName);
-                            String baiduNameEncrypted = Base64.encodeToString(encryptedBytes, Base64.DEFAULT);
-
-                            SharedPreferences.Editor editor = sp.edit();
-                            editor.putString("baidu_name", baiduNameEncrypted);
-                            editor.commit();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        String finalBaiduName = baiduName;
+                    public void onUserNameRecv(String baiduName) {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                mBaiduYunNameTv.setHint(finalBaiduName);
+                                String baiduName = BaiduNetDiskSettings.getBaiduName(SettingsActivity.this);
+                                mBaiduYunNameTv.setText(baiduName);
                                 syncToBaiduYun();
                             }
                         });
+                    }
 
+                    @Override
+                    public void onError(String errorMsg) {
+                        Toast.makeText(SettingsActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
                     }
                 });
 
-
-                SharedPreferences sp = getSharedPreferences("baidu_yun", Context.MODE_PRIVATE);
-                byte[] encryptedBytes = new byte[0];
-                try {
-                    encryptedBytes = KeyStoreUtil.encrypt(accessToken);
-                    accessToken = Base64.encodeToString(encryptedBytes, Base64.DEFAULT);
-
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("access_token", accessToken);
-                    editor.commit();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-
+                BaiduNetDiskSettings.setAccessToken(SettingsActivity.this, accessToken);
             }
         });
     }
@@ -198,52 +147,36 @@ public class SettingsActivity extends AppCompatActivity {
                     fos.flush();
                     fos.close();
 
-                    SharedPreferences sp = getSharedPreferences("baidu_yun", Context.MODE_PRIVATE);
-                    String accessTokenEnc = sp.getString("access_token", "");
-                    String accessTokenDec = new String(KeyStoreUtil.decrypt(accessTokenEnc));
-                    Log.d(TAG, accessTokenDec);
+                    String accessToken = BaiduNetDiskSettings.getAccessToken(SettingsActivity.this);
+
                     SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");//定义格式，不显示毫秒
                     Timestamp now = new Timestamp(System.currentTimeMillis());//获取系统当前时间
                     String str = df.format(now);
-                    String uploadUrl = "https://c.pcs.baidu.com/rest/2.0/pcs/file?method=upload&access_token=" + accessTokenDec + "&path=/apps/安心密码/passwords_" + str + ".dat";
-                    OkHttpClient okHttpClient = new OkHttpClient();
-                    // file是要上传的文件 File()
-                    File file = new File(getFilesDir().getAbsolutePath() + "/.passwords.dat");
-                    RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
-                    // 不仅可以支持传文件，还可以在传文件的同时，传参数
-                    MultipartBody requestBody = new MultipartBody.Builder()
-                            .setType(MultipartBody.FORM)
-                            .addFormDataPart("接收文件的参数名", "passwords", fileBody)
-                            .build();
-                    Request request = new Request.Builder().url(uploadUrl).post(requestBody).build();
-                    Response response = okHttpClient.newCall(request).execute();
-                    if(!response.isSuccessful()) {
-                        // 一般会在这抛个异常
-                    }
-                    String result = response.body().string();
-                    Log.d(TAG, result);
-                    JSONObject resultJsonObj = JSON.parseObject(result);
-                    Log.d(TAG, resultJsonObj.toString());
-                    mHandler.post(new Runnable() {
+                    BaiduYunSync.upload(accessToken, getFilesDir().getAbsolutePath() + "/.passwords.dat", "/apps/安心密码/passwords_" + str + ".dat", new BaiduYunSync.OnFileUploadListener() {
                         @Override
-                        public void run() {
+                        public void onSuccess() {
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(SettingsActivity.this, "同步本地密码列表到百度云盘成功!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
 
-                            if (!resultJsonObj.getString("fs_id").isEmpty()) {
-                                Toast.makeText(SettingsActivity.this, "同步本地密码列表到百度云盘成功!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(SettingsActivity.this, result, Toast.LENGTH_SHORT).show();
-
-                            }
+                        @Override
+                        public void onError(String result) {
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(SettingsActivity.this, result, Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     });
-                    response.body().close();
-                } catch (Exception e) {
+                } catch (Exception e ) {
                     e.printStackTrace();
                 }
-
-
-
             }
         }.start();
     }
