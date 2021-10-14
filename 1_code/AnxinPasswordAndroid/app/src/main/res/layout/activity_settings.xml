@@ -15,10 +15,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <RelativeLayout
-                android:id="@+id/rlyt_baidu_yun"
-                android:onClick="onBaiduYunBtnClicked"
+                android:id="@+id/rlyt_sync_password"
+                android:onClick="onSyncPasswordBtnClicked"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_marginTop="15dp"
@@ -27,25 +26,69 @@
                 android:background="@drawable/selector_edittext_top">
 
                 <TextView
-                    android:id="@+id/tv_baidu_yun_label"
+                    android:id="@+id/tv_sync_password_label"
                     android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="15dp"
                     android:gravity="center_vertical"
-                    android:text="百度云盘账户"
+                    android:text="备份密码"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_title"
+                    android:id="@+id/tv_sync_password"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_toLeftOf="@+id/iv_nav_right1"
+                    android:layout_toLeftOf="@+id/iv_nav_right0"
                     android:layout_marginLeft="19dp"
                     android:layout_marginRight="15dp"
-                    android:layout_toRightOf="@+id/tv_baidu_yun_label"
+                    android:layout_toRightOf="@+id/tv_sync_password_label"
+                    android:gravity="right|center_vertical"
+                    android:hint="默认"
+                    android:maxLines="1"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/iv_nav_right0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_action_nav_next"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlyt_baidu_yun_account_set"
+                android:onClick="onBaiduYunAccountSetBtnClicked"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginBottom="1px"
+                android:focusable="true"
+                android:background="@drawable/selector_edittext_middle">
+
+                <TextView
+                    android:id="@+id/tv_baidu_yun_account_set_label"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:text="百度云盘账户设置"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_baidu_yun_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginRight="13dp"
+                    android:layout_toLeftOf="@+id/iv_nav_right1"
+                    android:layout_toRightOf="@+id/tv_baidu_yun_account_set_label"
                     android:gravity="right|center_vertical"
                     android:hint="未设置"
                     android:maxLines="1"
@@ -62,7 +105,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/rlyt_sync"
+                android:id="@+id/rlyt_backup"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_marginBottom="1px"
@@ -70,7 +113,7 @@
                 android:background="@drawable/selector_edittext_middle">
 
                 <TextView
-                    android:id="@+id/tv_sync_label"
+                    android:id="@+id/tv_backup_label"
                     android:layout_width="250dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
@@ -82,7 +125,7 @@
                     android:textStyle="bold" />
 
                 <Switch
-                    android:id="@+id/btn_switch"
+                    android:id="@+id/btn_auto_backup_switch"
                     android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -122,6 +165,15 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/ic_action_nav_next"/>
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:visibility="invisible" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -172,10 +224,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <WebView
-        android:id="@+id/wv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layerType="software"
-        android:visibility="invisible" />
 </RelativeLayout>

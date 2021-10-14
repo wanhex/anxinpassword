@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -21,14 +22,22 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.wanhex.anxinpassword.add.PasswordAddActivity;
+import com.wanhex.anxinpassword.cipher.AESEncrypt;
 import com.wanhex.anxinpassword.cipher.KeyguardVerifyUtil;
+import com.wanhex.anxinpassword.clouddisk.BaiduNetDiskSettings;
+import com.wanhex.anxinpassword.clouddisk.BaiduYunSync;
 import com.wanhex.anxinpassword.databinding.ActivityMainBinding;
 import com.wanhex.anxinpassword.db.AppDatabase;
 import com.wanhex.anxinpassword.db.Password;
 import com.wanhex.anxinpassword.edit.PasswordEditActivity;
+import com.wanhex.anxinpassword.settings.AppSettings;
 import com.wanhex.anxinpassword.settings.SettingsActivity;
 
+import java.io.FileOutputStream;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 if (passwordNew != null) {
                     mPasswordList.add(0, passwordNew);
                     mAdapter.notifyDataSetChanged();
+                    syncToBaiduYun();
                     return;
                 }
                 Password passwordEdit = (Password) data.getExtras().get("password_edit");
@@ -143,6 +153,13 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         }
                     }
+
+                    syncToBaiduYun();
+                }
+
+                boolean passwordsSynced = data.getExtras().getBoolean("passwords_synced", false);
+                if (passwordsSynced) {
+                    loadPasswords();
                 }
 
             }
@@ -181,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
                 MyApp app = (MyApp)getApplication();
                 AppDatabase appDatabase = app.getPasswordDb();
                 List<Password> passwordList = appDatabase.passwordDao().getAll();
+                mPasswordList.clear();
                 mPasswordList.addAll(passwordList);
 
                 mHandler.post(new Runnable() {
@@ -213,6 +231,70 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    private void syncToBaiduYun() {
+
+        if (!BaiduNetDiskSettings.getSyncSwitch(this, true)) {
+            return;
+        }
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                MyApp app = (MyApp)getApplication();
+                AppDatabase appDatabase = app.getPasswordDb();
+                List<Password> passwordList = appDatabase.passwordDao().getAll();
+                String passwordsJsonStr = JSON.toJSONString(passwordList);
+
+                String syncPassword = AppSettings.getSyncPassword(MainActivity.this);
+
+                String passwordsJsonEncStr = AESEncrypt.encrypt(passwordsJsonStr, syncPassword);
+                try {
+                    FileOutputStream fos = openFileOutput(".passwords.dat", Context.MODE_PRIVATE);
+                    fos.write(passwordsJsonEncStr.getBytes());
+                    fos.flush();
+                    fos.close();
+
+                    String accessToken = BaiduNetDiskSettings.getAccessToken(MainActivity.this);
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");//定义格式，不显示毫秒
+                    Timestamp now = new Timestamp(System.currentTimeMillis());//获取系统当前时间
+                    String dateTimeStr = simpleDateFormat.format(now);
+
+                    boolean isDefaultSyncPassword = AppSettings.isDefaultSyncPassword(MainActivity.this);
+                    String passwordSuffix = "_custom_sync_passwd";
+                    if (isDefaultSyncPassword) {
+                        passwordSuffix = "_default_sync_passwd";
+                    }
+
+                    BaiduYunSync.upload(accessToken, getFilesDir().getAbsolutePath() + "/.passwords.dat", "/apps/安心密码/passwords_" + dateTimeStr + passwordSuffix + ".dat", new BaiduYunSync.OnFileUploadListener() {
+                        @Override
+                        public void onSuccess() {
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(MainActivity.this, "同步本地密码列表到百度云盘成功!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onError(String result) {
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    });
+                } catch (Exception e ) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     public native String stringFromJNI();

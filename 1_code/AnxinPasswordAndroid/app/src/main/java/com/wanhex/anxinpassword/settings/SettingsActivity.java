@@ -9,6 +9,9 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +26,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wanhex.anxinpassword.MyApp;
 import com.wanhex.anxinpassword.R;
+import com.wanhex.anxinpassword.add.PasswordAddActivity;
 import com.wanhex.anxinpassword.cipher.AESEncrypt;
 import com.wanhex.anxinpassword.cipher.KeyStoreUtil;
 import com.wanhex.anxinpassword.clouddisk.BaiduNetDiskSettings;
@@ -55,6 +59,10 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView mBaiduYunNameTv;
     private Switch mSwitchBtn;
 
+    private RelativeLayout mRestoreRLyt;
+    private ImageView mNavRight3Iv;
+    private ProgressBar mRestorePb;
+
     private ActivityResultLauncher mActivityResultLauncher;
     private Handler mHandler = new Handler();
 
@@ -65,8 +73,12 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         mAboutTv = findViewById(R.id.tv_about);
-        mBaiduYunNameTv = findViewById(R.id.tv_title);
-        mSwitchBtn = findViewById(R.id.btn_switch);
+        mBaiduYunNameTv = findViewById(R.id.tv_baidu_yun_account);
+        mSwitchBtn = findViewById(R.id.btn_auto_backup_switch);
+
+        mRestoreRLyt = findViewById(R.id.rlyt_restore);
+        mNavRight3Iv = findViewById(R.id.iv_nav_right3);
+        mRestorePb = findViewById(R.id.progress_bar);
 
         boolean syncSwitch = BaiduNetDiskSettings.getSyncSwitch(this, true);
         mSwitchBtn.setChecked(syncSwitch);
@@ -132,6 +144,11 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void syncToBaiduYun() {
+
+        if (!BaiduNetDiskSettings.getSyncSwitch(this, true)) {
+            return;
+        }
+
         new Thread() {
             @Override
             public void run() {
@@ -140,7 +157,10 @@ public class SettingsActivity extends AppCompatActivity {
                 AppDatabase appDatabase = app.getPasswordDb();
                 List<Password> passwordList = appDatabase.passwordDao().getAll();
                 String passwordsJsonStr = JSON.toJSONString(passwordList);
-                String passwordsJsonEncStr = AESEncrypt.encrypt(passwordsJsonStr, "983u4948u9u4t");
+
+                String syncPassword = AppSettings.getSyncPassword(SettingsActivity.this);
+
+                String passwordsJsonEncStr = AESEncrypt.encrypt(passwordsJsonStr, syncPassword);
                 try {
                     FileOutputStream fos = openFileOutput(".passwords.dat", Context.MODE_PRIVATE);
                     fos.write(passwordsJsonEncStr.getBytes());
@@ -149,11 +169,17 @@ public class SettingsActivity extends AppCompatActivity {
 
                     String accessToken = BaiduNetDiskSettings.getAccessToken(SettingsActivity.this);
 
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");//定义格式，不显示毫秒
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");//定义格式，不显示毫秒
                     Timestamp now = new Timestamp(System.currentTimeMillis());//获取系统当前时间
-                    String str = df.format(now);
+                    String dateTimeStr = simpleDateFormat.format(now);
 
-                    BaiduYunSync.upload(accessToken, getFilesDir().getAbsolutePath() + "/.passwords.dat", "/apps/安心密码/passwords_" + str + ".dat", new BaiduYunSync.OnFileUploadListener() {
+                    boolean isDefaultSyncPassword = AppSettings.isDefaultSyncPassword(SettingsActivity.this);
+                    String passwordSuffix = "_custom_sync_passwd";
+                    if (isDefaultSyncPassword) {
+                        passwordSuffix = "_default_sync_passwd";
+                    }
+
+                    BaiduYunSync.upload(accessToken, getFilesDir().getAbsolutePath() + "/.passwords.dat", "/apps/安心密码/passwords_" + dateTimeStr + passwordSuffix + ".dat", new BaiduYunSync.OnFileUploadListener() {
                         @Override
                         public void onSuccess() {
                             mHandler.post(new Runnable() {
@@ -181,7 +207,7 @@ public class SettingsActivity extends AppCompatActivity {
         }.start();
     }
 
-    public void onBaiduYunBtnClicked(View view) {
+    public void onBaiduYunAccountSetBtnClicked(View view) {
         mActivityResultLauncher.launch(new Intent(this, BaiduOAuthActivity.class));
 
     }
@@ -190,5 +216,48 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void onRestoreBtnClicked(View view) {
+        mRestoreRLyt.setEnabled(false);
+        mNavRight3Iv.setVisibility(View.INVISIBLE);
+        mRestorePb.setVisibility(View.VISIBLE);
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+
+                String accessToken = BaiduNetDiskSettings.getAccessToken(SettingsActivity.this);
+                BaiduYunSync.download(SettingsActivity.this, accessToken, "xx", new BaiduYunSync.OnFileDownListener() {
+                    @Override
+                    public void onSuccess() {
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                mRestoreRLyt.setEnabled(true);
+                                Toast.makeText(SettingsActivity.this, "数据还原（百度云盘->本机）成功!", Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent();
+                                intent.putExtra("passwords_synced", true);
+                                SettingsActivity.this.setResult(RESULT_OK, intent);
+                                finish();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(String result) {
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                mRestoreRLyt.setEnabled(true);
+                                Toast.makeText(SettingsActivity.this, result, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+            }
+        }.start();
+    }
+
+    public void onSyncPasswordBtnClicked(View view) {
+        Toast.makeText(this, "开发中...", Toast.LENGTH_SHORT).show();
     }
 }
