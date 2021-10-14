@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.tencent.bugly.beta.Beta;
 import com.wanhex.anxinpassword.MyApp;
 import com.wanhex.anxinpassword.R;
 import com.wanhex.anxinpassword.add.PasswordAddActivity;
@@ -213,6 +214,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void onAboutBtnClicked(View view) {
+        Beta.checkUpgrade(true,false);
     }
 
     public void onRestoreBtnClicked(View view) {

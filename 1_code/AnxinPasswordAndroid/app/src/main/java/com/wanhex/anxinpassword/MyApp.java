@@ -6,6 +6,8 @@ import android.util.Log;
 
 import androidx.room.Room;
 
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.wanhex.anxinpassword.cipher.CipherUtil;
 import com.wanhex.anxinpassword.cipher.RandomUntil;
 import com.wanhex.anxinpassword.db.AppDatabase;
@@ -25,6 +27,8 @@ public class MyApp extends Application {
 
         mPasswordDb = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "passwords.sqlite").openHelperFactory(factory).build();
+
+        Bugly.init(getApplicationContext(), "49d54a1304", true);
     }
 
     public AppDatabase getPasswordDb() {
