@@ -177,13 +177,90 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rlyt_opensource"
+                android:onClick="onOpenSourceBtnClicked"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="1px"
+                android:focusable="true"
+                android:background="@drawable/selector_edittext_top">
+
+                <TextView
+                    android:id="@+id/tv_opensource_label"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:text="开源代码"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_opensoure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@+id/iv_nav_right4"
+                    android:layout_toRightOf="@+id/tv_opensource_label"
+                    android:gravity="right|center_vertical"
+                    android:hint="anxinpassword@github"
+                    android:maxLines="1"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/iv_nav_right4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_action_nav_next"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlyt_feedback"
+                android:onClick="onFeedbackBtnClicked"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginBottom="1px"
+                android:focusable="true"
+                android:background="@drawable/selector_edittext_middle">
+
+                <TextView
+                    android:id="@+id/tv_feedback_label"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:text="意见反馈"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/iv_nav_right5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_action_nav_next"/>
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/rlyt_about"
                 android:onClick="onAboutBtnClicked"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_marginBottom="1px"
                 android:focusable="true"
-                android:background="@drawable/selector_settings_single_btn">
+                android:background="@drawable/selector_edittext_bottom">
 
                 <TextView
                     android:id="@+id/tv_about_label"

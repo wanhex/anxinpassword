@@ -262,4 +262,12 @@ public class SettingsActivity extends AppCompatActivity {
     public void onSyncPasswordBtnClicked(View view) {
         Toast.makeText(this, "开发中...", Toast.LENGTH_SHORT).show();
     }
+
+    public void onOpenSourceBtnClicked(View view) {
+        startActivity(new Intent(this, OpenSourceActivity.class));
+    }
+
+    public void onFeedbackBtnClicked(View view) {
+        startActivity(new Intent(this, FeedbackActivity.class));
+    }
 }

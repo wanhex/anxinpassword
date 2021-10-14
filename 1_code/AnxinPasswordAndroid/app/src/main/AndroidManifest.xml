@@ -28,6 +28,10 @@
         <activity
             android:name=".clouddisk.BaiduOAuthActivity"/>
         <activity
+            android:name=".settings.OpenSourceActivity"/>
+        <activity
+            android:name=".settings.FeedbackActivity"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
