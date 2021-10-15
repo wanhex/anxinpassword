@@ -11,6 +11,9 @@ import java.util.List;
 @Dao
 public interface PasswordDao {
 
+    @Query("DELETE FROM password")
+    void deleteAll();
+
     @Query("SELECT * FROM password order by timestamp desc")
     List<Password> getAll();
 
@@ -31,5 +34,6 @@ public interface PasswordDao {
 
     @Update
     void update(Password password);
+
 }
 
