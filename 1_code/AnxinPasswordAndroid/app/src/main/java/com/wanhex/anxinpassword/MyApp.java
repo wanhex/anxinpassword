@@ -1,15 +1,11 @@
 package com.wanhex.anxinpassword;
 
 import android.app.Application;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import androidx.room.Room;
 
 import com.tencent.bugly.Bugly;
-import com.tencent.bugly.crashreport.CrashReport;
 import com.wanhex.anxinpassword.cipher.CipherUtil;
-import com.wanhex.anxinpassword.cipher.RandomUntil;
 import com.wanhex.anxinpassword.db.AppDatabase;
 
 import net.sqlcipher.database.SupportFactory;

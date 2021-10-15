@@ -3,19 +3,12 @@ package com.wanhex.anxinpassword.cipher;
 import android.util.Base64;
 import android.util.Log;
 
-import java.io.Closeable;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import javax.crypto.Cipher;
-import javax.crypto.CipherInputStream;
-import javax.crypto.CipherOutputStream;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
 /**
  * AES 对称加密算法，加解密工具类
  */
@@ -27,7 +20,7 @@ public class AESEncrypt {
      * 加密算法
      */
     private static final String KEY_ALGORITHM = "AES";
-   
+
     /**
      * AES 的 密钥长度，32 字节，范围：16 - 32 字节
      */
@@ -46,8 +39,8 @@ public class AESEncrypt {
      * 加解密算法/工作模式/填充方式
      */
     private static final String CIPHER_ALGORITHM = "AES/ECB/PKCS5Padding";
-    
-   /**
+
+    /**
      * AES 加密
      *
      * @param data      待加密内容
@@ -125,14 +118,14 @@ public class AESEncrypt {
         return secretKey;
     }
 
-   /**
+    /**
      * 将 Base64 字符串 解码成 字节数组
      */
     public static byte[] base64Decode(String data) {
         return Base64.decode(data, Base64.NO_WRAP);
     }
 
-   /**
+    /**
      * 将 字节数组 转换成 Base64 编码
      */
     public static String base64Encode(byte[] data) {

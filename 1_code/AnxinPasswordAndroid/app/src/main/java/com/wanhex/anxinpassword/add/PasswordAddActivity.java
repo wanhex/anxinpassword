@@ -1,7 +1,5 @@
 package com.wanhex.anxinpassword.add;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,17 +12,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.wanhex.anxinpassword.MainActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.wanhex.anxinpassword.MyApp;
 import com.wanhex.anxinpassword.R;
 import com.wanhex.anxinpassword.cipher.KeyguardVerifyUtil;
 import com.wanhex.anxinpassword.cipher.RandomUntil;
 import com.wanhex.anxinpassword.db.AppDatabase;
 import com.wanhex.anxinpassword.db.Password;
-
-import java.util.Random;
 
 public class PasswordAddActivity extends AppCompatActivity implements TextWatcher {
 
@@ -99,20 +95,16 @@ public class PasswordAddActivity extends AppCompatActivity implements TextWatche
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.save_password:
-                mPassword = new Password(
-                        mSiteEt.getText().toString(),
-                        mUsernameEt.getText().toString(),
-                        mPasswordEt.getText().toString(),
-                        mCommentsEt.getText().toString()
-                );
-                mPassword.timeStamp = System.currentTimeMillis();
-                mPassword.abbreviatedUserName = mPassword.getAbbreviatedUserName();
-                save(mPassword);
-                break;
-            default:
-                break;
+        if (item.getItemId() == R.id.save_password) {
+            mPassword = new Password(
+                    mSiteEt.getText().toString(),
+                    mUsernameEt.getText().toString(),
+                    mPasswordEt.getText().toString(),
+                    mCommentsEt.getText().toString()
+            );
+            mPassword.timeStamp = System.currentTimeMillis();
+            mPassword.abbreviatedUserName = mPassword.getAbbreviatedUserName();
+            save(mPassword);
         }
         return true;
     }

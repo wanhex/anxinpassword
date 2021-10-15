@@ -1,9 +1,7 @@
 package com.wanhex.anxinpassword.settings;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -25,7 +23,7 @@ public class OpenSourceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_opensource);
 
         mWebView = findViewById(R.id.wv);
-        mWebView.setWebViewClient(new WebViewClient(){
+        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 return false;// 返回false
@@ -33,7 +31,7 @@ public class OpenSourceActivity extends AppCompatActivity {
         });
         WebSettings webSettings = mWebView.getSettings();
         // 让WebView能够执行javaScript
-        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptEnabled(false);
         // 让JavaScript可以自动打开windows
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         // 设置缓存

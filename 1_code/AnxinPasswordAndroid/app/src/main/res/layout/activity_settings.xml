@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rlyt_passwd_add"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -57,7 +58,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_action_nav_next"/>
+                    android:src="@drawable/ic_action_nav_next"
+                    tools:ignore="ContentDescription" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -101,7 +103,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_action_nav_next"/>
+                    android:src="@drawable/ic_action_nav_next"
+                    tools:ignore="ContentDescription" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -124,7 +127,7 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/btn_auto_backup_switch"
                     android:checked="true"
                     android:layout_width="wrap_content"
@@ -164,7 +167,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_action_nav_next"/>
+                    android:src="@drawable/ic_action_nav_next"
+                    tools:ignore="ContentDescription" />
 
                 <ProgressBar
                     android:id="@+id/progress_bar"
@@ -219,8 +223,10 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_action_nav_next"/>
+                    android:src="@drawable/ic_action_nav_next"
+                    tools:ignore="ContentDescription" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/rlyt_feedback"
                 android:onClick="onFeedbackBtnClicked"
@@ -250,7 +256,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_action_nav_next"/>
+                    android:src="@drawable/ic_action_nav_next"
+                    tools:ignore="ContentDescription" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -295,7 +302,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_action_nav_next"/>
+                    android:src="@drawable/ic_action_nav_next"
+                    tools:ignore="ContentDescription" />
             </RelativeLayout>
 
         </LinearLayout>

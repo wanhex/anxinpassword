@@ -2,17 +2,14 @@ package com.wanhex.anxinpassword.settings;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,36 +18,23 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.tencent.bugly.beta.Beta;
 import com.wanhex.anxinpassword.MyApp;
 import com.wanhex.anxinpassword.R;
-import com.wanhex.anxinpassword.add.PasswordAddActivity;
 import com.wanhex.anxinpassword.cipher.AESEncrypt;
-import com.wanhex.anxinpassword.cipher.KeyStoreUtil;
 import com.wanhex.anxinpassword.clouddisk.BaiduNetDiskSettings;
 import com.wanhex.anxinpassword.clouddisk.BaiduOAuthActivity;
 import com.wanhex.anxinpassword.clouddisk.BaiduYunSync;
 import com.wanhex.anxinpassword.db.AppDatabase;
 import com.wanhex.anxinpassword.db.Password;
 
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -58,7 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private TextView mAboutTv;
     private TextView mBaiduYunNameTv;
-    private Switch mSwitchBtn;
+    private SwitchCompat mSwitchBtn;
 
     private RelativeLayout mRestoreRLyt;
     private ImageView mNavRight3Iv;
@@ -154,7 +138,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 super.run();
-                MyApp app = (MyApp)getApplication();
+                MyApp app = (MyApp) getApplication();
                 AppDatabase appDatabase = app.getPasswordDb();
                 List<Password> passwordList = appDatabase.passwordDao().getAll();
                 String passwordsJsonStr = JSON.toJSONString(passwordList);
@@ -201,7 +185,7 @@ public class SettingsActivity extends AppCompatActivity {
                             });
                         }
                     });
-                } catch (Exception e ) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -214,7 +198,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void onAboutBtnClicked(View view) {
-        Beta.checkUpgrade(true,false);
+        Beta.checkUpgrade(true, false);
     }
 
     public void onRestoreBtnClicked(View view) {

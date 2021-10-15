@@ -25,7 +25,7 @@ public class BaiduOAuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_baidu_oauth);
 
         mWebView = findViewById(R.id.wv);
-        mWebView.setWebViewClient(new WebViewClient(){
+        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 return false;// 返回false
@@ -33,7 +33,7 @@ public class BaiduOAuthActivity extends AppCompatActivity {
         });
         WebSettings webSettings = mWebView.getSettings();
         // 让WebView能够执行javaScript
-        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptEnabled(false);
         // 让JavaScript可以自动打开windows
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         // 设置缓存
@@ -66,7 +66,7 @@ public class BaiduOAuthActivity extends AppCompatActivity {
             if (currentUrl.contains("login_success")) {
                 Intent intent = new Intent();
                 String[] params = currentUrl.split("&");
-                for (int i=0; i<params.length; i++) {
+                for (int i = 0; i < params.length; i++) {
                     if (params[i].contains("access_token")) {
                         intent.putExtra("access_token", params[i].substring(13));
                     }

@@ -20,13 +20,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.wanhex.anxinpassword.MyApp;
 import com.wanhex.anxinpassword.R;
-import com.wanhex.anxinpassword.add.PasswordAddActivity;
 import com.wanhex.anxinpassword.cipher.KeyguardVerifyUtil;
 import com.wanhex.anxinpassword.cipher.RandomUntil;
 import com.wanhex.anxinpassword.db.AppDatabase;
 import com.wanhex.anxinpassword.db.Password;
-
-import java.util.Random;
 
 public class PasswordEditActivity extends AppCompatActivity implements TextWatcher {
 

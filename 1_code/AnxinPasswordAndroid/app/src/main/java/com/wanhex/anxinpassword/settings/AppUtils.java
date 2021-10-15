@@ -10,7 +10,7 @@ import android.graphics.drawable.Drawable;
 
 //跟App相关的辅助类
 public class AppUtils {
- 
+
     /**
      * 获取应用程序名称
      */
@@ -26,9 +26,10 @@ public class AppUtils {
         }
         return null;
     }
- 
+
     /**
      * [获取应用程序版本名称信息]
+     *
      * @param context
      * @return 当前应用的版本名称
      */
@@ -43,10 +44,11 @@ public class AppUtils {
         }
         return null;
     }
- 
- 
+
+
     /**
      * [获取应用程序版本名称信息]
+     *
      * @param context
      * @return 当前应用的版本名称
      */
@@ -61,10 +63,11 @@ public class AppUtils {
         }
         return 0;
     }
- 
- 
+
+
     /**
      * [获取应用程序版本名称信息]
+     *
      * @param context
      * @return 当前应用的版本名称
      */
@@ -79,10 +82,11 @@ public class AppUtils {
         }
         return null;
     }
- 
- 
+
+
     /**
      * 获取图标 bitmap
+     *
      * @param context
      */
     public static synchronized Bitmap getBitmap(Context context) {
@@ -101,5 +105,5 @@ public class AppUtils {
         Bitmap bm = bd.getBitmap();
         return bm;
     }
- 
+
 }

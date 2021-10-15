@@ -14,7 +14,7 @@ import com.wanhex.anxinpassword.db.Password;
 
 import java.util.List;
 
-public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.ViewHolder>{
+public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.ViewHolder> {
 
     private List<Password> mPasswordList;
 

@@ -23,6 +23,7 @@ public class KeyguardVerifyUtil {
     public interface OnKeyguardVerifiedListener {
         void onKeyguardVerifyResult(boolean keyguardVerified);
     }
+
     private static OnKeyguardVerifiedListener mOnKeyguardVerifiedListener;
     private static ActivityResultLauncher mActivityResultLauncher;
 
@@ -56,18 +57,13 @@ public class KeyguardVerifyUtil {
         } else {
             // non first start app.
             long delta = (System.currentTimeMillis() - lastPassTime) / 1000;
-            Log.d(TAG, "delta: "+ delta);
+            Log.d(TAG, "delta: " + delta);
             if (delta > 60) {
                 needLaunchKeyguard = true;
             }
         }
 
         if (!needLaunchKeyguard) {
-            mOnKeyguardVerifiedListener.onKeyguardVerifyResult(true);
-            return;
-        }
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             mOnKeyguardVerifiedListener.onKeyguardVerifyResult(true);
             return;
         }

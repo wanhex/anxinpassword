@@ -1,19 +1,9 @@
 package com.wanhex.anxinpassword;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
-import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -21,6 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.wanhex.anxinpassword.add.PasswordAddActivity;
@@ -78,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 new AlertDialog.Builder(MainActivity.this)
-                        .setMessage("要删除 " + mPasswordList.get(i).site+ " 吗？")
+                        .setMessage("要删除 " + mPasswordList.get(i).site + " 吗？")
                         .setPositiveButton("是的", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -140,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Password passwordEdit = (Password) data.getExtras().get("password_edit");
                 if (passwordEdit != null) {
-                    for (int i=0; i<mPasswordList.size(); i++) {
+                    for (int i = 0; i < mPasswordList.size(); i++) {
                         Password passwordInList = mPasswordList.get(i);
                         if (passwordInList.id == passwordEdit.id) {
                             passwordInList.site = passwordEdit.site;
@@ -195,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 super.run();
-                MyApp app = (MyApp)getApplication();
+                MyApp app = (MyApp) getApplication();
                 AppDatabase appDatabase = app.getPasswordDb();
                 List<Password> passwordList = appDatabase.passwordDao().getAll();
                 mPasswordList.clear();
@@ -220,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.add_password:
                 mActivityResultLauncher.launch(new Intent(this, PasswordAddActivity.class));
                 break;
@@ -243,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 super.run();
-                MyApp app = (MyApp)getApplication();
+                MyApp app = (MyApp) getApplication();
                 AppDatabase appDatabase = app.getPasswordDb();
                 List<Password> passwordList = appDatabase.passwordDao().getAll();
                 String passwordsJsonStr = JSON.toJSONString(passwordList);
@@ -290,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
                             });
                         }
                     });
-                } catch (Exception e ) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

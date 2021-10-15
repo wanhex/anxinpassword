@@ -3,7 +3,6 @@ package com.wanhex.anxinpassword.clouddisk;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -13,10 +12,8 @@ import com.wanhex.anxinpassword.cipher.AESEncrypt;
 import com.wanhex.anxinpassword.db.AppDatabase;
 import com.wanhex.anxinpassword.db.Password;
 import com.wanhex.anxinpassword.settings.AppSettings;
-import com.wanhex.anxinpassword.settings.SettingsActivity;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -35,16 +32,19 @@ public class BaiduYunSync {
 
     public interface OnBaiduUserInfoRecvListener {
         void onUserNameRecv(String baiduName);
+
         void onError(String errorMsg);
     }
 
     public interface OnFileUploadListener {
         void onSuccess();
+
         void onError(String result);
     }
 
     public interface OnFileDownListener {
         void onSuccess();
+
         void onError(String result);
     }
 
@@ -99,7 +99,7 @@ public class BaiduYunSync {
                     .build();
             Request request = new Request.Builder().url(uploadUrl).post(requestBody).build();
             Response response = okHttpClient.newCall(request).execute();
-            if(!response.isSuccessful()) {
+            if (!response.isSuccessful()) {
                 // 一般会在这抛个异常
                 file.delete();
                 onFileUploadListener.onError(response.message());
@@ -249,14 +249,14 @@ public class BaiduYunSync {
 
                 List<Password> passwordList = JSON.parseArray(passwords, Password.class);
 
-                MyApp app = (MyApp)((Activity)context).getApplication();
+                MyApp app = (MyApp) ((Activity) context).getApplication();
                 AppDatabase appDatabase = app.getPasswordDb();
                 List<Password> passwordListInDb = appDatabase.passwordDao().getAll();
 
                 assert passwordList != null;
-                for (Password password: passwordList) {
+                for (Password password : passwordList) {
                     boolean foundInDb = false;
-                    for (Password passwordInDb: passwordListInDb) {
+                    for (Password passwordInDb : passwordListInDb) {
                         if (password.site.equals(passwordInDb.site)
                                 && password.username.equals(passwordInDb.username)
                                 && password.password.equals(passwordInDb.password)
