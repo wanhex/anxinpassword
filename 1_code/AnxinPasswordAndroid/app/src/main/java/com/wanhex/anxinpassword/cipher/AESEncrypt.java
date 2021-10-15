@@ -86,7 +86,7 @@ public class AESEncrypt {
     /**
      * 使用密码获取 AES 秘钥
      */
-    public static SecretKeySpec getSecretKey(String secretKey) {
+    private static SecretKeySpec getSecretKey(String secretKey) {
         secretKey = toMakeKey(secretKey, SECRET_KEY_LENGTH, DEFAULT_VALUE);
         return new SecretKeySpec(secretKey.getBytes(CHARSET_UTF8), KEY_ALGORITHM);
     }
@@ -121,14 +121,14 @@ public class AESEncrypt {
     /**
      * 将 Base64 字符串 解码成 字节数组
      */
-    public static byte[] base64Decode(String data) {
+    private static byte[] base64Decode(String data) {
         return Base64.decode(data, Base64.NO_WRAP);
     }
 
     /**
      * 将 字节数组 转换成 Base64 编码
      */
-    public static String base64Encode(byte[] data) {
+    private static String base64Encode(byte[] data) {
         return Base64.encodeToString(data, Base64.NO_WRAP);
     }
 
