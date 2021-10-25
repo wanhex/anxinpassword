@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
-public class CipherUtil {
+public class DBPasswordUtil {
 
     public static byte[] getMainDbPassword(Context context) {
         SharedPreferences sp = context.getSharedPreferences("cipher", Context.MODE_PRIVATE);
         if (!sp.contains("main_db_passwd")) {
-            String dbPassword = RandomUntil.getNumLargeSmallLetter(128);
+            String dbPassword = RandomUtil.getNumLargeSmallLetter(128);
             try {
                 KeyStoreUtil.createKey();
                 byte[] encryptedBytes = KeyStoreUtil.encrypt(dbPassword);
@@ -31,4 +31,5 @@ public class CipherUtil {
             return encryptedPassword.getBytes();
         }
     }
+
 }

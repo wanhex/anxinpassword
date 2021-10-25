@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.room.Room;
 
 import com.tencent.bugly.Bugly;
-import com.wanhex.anxinpassword.cipher.CipherUtil;
+import com.wanhex.anxinpassword.cipher.DBPasswordUtil;
 import com.wanhex.anxinpassword.db.AppDatabase;
 
 import net.sqlcipher.database.SupportFactory;
@@ -18,7 +18,7 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        byte[] mainDbPasswordBytes = CipherUtil.getMainDbPassword(getApplicationContext());
+        byte[] mainDbPasswordBytes = DBPasswordUtil.getMainDbPassword(getApplicationContext());
         SupportFactory factory = new SupportFactory(mainDbPasswordBytes);
 
         mPasswordDb = Room.databaseBuilder(getApplicationContext(),

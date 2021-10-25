@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.wanhex.anxinpassword.add.PasswordAddActivity;
-import com.wanhex.anxinpassword.cipher.AESEncrypt;
+import com.wanhex.anxinpassword.cipher.AESUtil;
 import com.wanhex.anxinpassword.cipher.KeyguardVerifyUtil;
 import com.wanhex.anxinpassword.clouddisk.BaiduNetDiskSettings;
 import com.wanhex.anxinpassword.clouddisk.BaiduYunSync;
@@ -248,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
 
                 String syncPassword = AppSettings.getSyncPassword(MainActivity.this);
 
-                String passwordsJsonEncStr = AESEncrypt.encrypt(passwordsJsonStr, syncPassword);
+                String passwordsJsonEncStr = AESUtil.encrypt(passwordsJsonStr, syncPassword);
                 try {
                     FileOutputStream fos = openFileOutput(".passwords.dat", Context.MODE_PRIVATE);
                     fos.write(passwordsJsonEncStr.getBytes());
@@ -256,6 +256,9 @@ public class MainActivity extends AppCompatActivity {
                     fos.close();
 
                     String accessToken = BaiduNetDiskSettings.getAccessToken(MainActivity.this);
+                    if (accessToken.isEmpty()) {
+                        return;
+                    }
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");//定义格式，不显示毫秒
                     Timestamp now = new Timestamp(System.currentTimeMillis());//获取系统当前时间

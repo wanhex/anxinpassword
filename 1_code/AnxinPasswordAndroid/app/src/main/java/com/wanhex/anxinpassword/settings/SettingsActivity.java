@@ -24,7 +24,7 @@ import com.alibaba.fastjson.JSON;
 import com.tencent.bugly.beta.Beta;
 import com.wanhex.anxinpassword.MyApp;
 import com.wanhex.anxinpassword.R;
-import com.wanhex.anxinpassword.cipher.AESEncrypt;
+import com.wanhex.anxinpassword.cipher.AESUtil;
 import com.wanhex.anxinpassword.clouddisk.BaiduNetDiskSettings;
 import com.wanhex.anxinpassword.clouddisk.BaiduOAuthActivity;
 import com.wanhex.anxinpassword.clouddisk.BaiduYunSync;
@@ -145,7 +145,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 String syncPassword = AppSettings.getSyncPassword(SettingsActivity.this);
 
-                String passwordsJsonEncStr = AESEncrypt.encrypt(passwordsJsonStr, syncPassword);
+                String passwordsJsonEncStr = AESUtil.encrypt(passwordsJsonStr, syncPassword);
                 try {
                     FileOutputStream fos = openFileOutput(".passwords.dat", Context.MODE_PRIVATE);
                     fos.write(passwordsJsonEncStr.getBytes());

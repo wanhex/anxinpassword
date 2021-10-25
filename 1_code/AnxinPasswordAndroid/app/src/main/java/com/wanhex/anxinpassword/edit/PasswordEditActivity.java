@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.wanhex.anxinpassword.MyApp;
 import com.wanhex.anxinpassword.R;
 import com.wanhex.anxinpassword.cipher.KeyguardVerifyUtil;
-import com.wanhex.anxinpassword.cipher.RandomUntil;
+import com.wanhex.anxinpassword.cipher.RandomUtil;
 import com.wanhex.anxinpassword.db.AppDatabase;
 import com.wanhex.anxinpassword.db.Password;
 
@@ -71,7 +71,7 @@ public class PasswordEditActivity extends AppCompatActivity implements TextWatch
         mRandomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPasswordEt.setText(RandomUntil.getNumLargeSmallLetter(8));
+                mPasswordEt.setText(RandomUtil.getNumLargeSmallLetter(8));
             }
         });
 

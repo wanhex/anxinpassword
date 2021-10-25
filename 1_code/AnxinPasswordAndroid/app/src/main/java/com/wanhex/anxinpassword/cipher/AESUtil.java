@@ -12,9 +12,9 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * AES 对称加密算法，加解密工具类
  */
-public class AESEncrypt {
+public class AESUtil {
 
-    private static final String TAG = AESEncrypt.class.getSimpleName() + " --> ";
+    private static final String TAG = AESUtil.class.getSimpleName() + " --> ";
 
     /**
      * 加密算法

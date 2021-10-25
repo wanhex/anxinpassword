@@ -2,7 +2,7 @@ package com.wanhex.anxinpassword.cipher;
 
 import java.util.Random;
 
-public class RandomUntil {
+public class RandomUtil {
     /**
      * 生成一个0 到 count 之间的随机数
      *

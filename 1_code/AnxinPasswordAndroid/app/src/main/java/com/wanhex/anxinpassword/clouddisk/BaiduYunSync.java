@@ -8,7 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wanhex.anxinpassword.MyApp;
-import com.wanhex.anxinpassword.cipher.AESEncrypt;
+import com.wanhex.anxinpassword.cipher.AESUtil;
 import com.wanhex.anxinpassword.db.AppDatabase;
 import com.wanhex.anxinpassword.db.Password;
 import com.wanhex.anxinpassword.settings.AppSettings;
@@ -245,7 +245,7 @@ public class BaiduYunSync {
 
                 String syncPassword = AppSettings.getSyncPassword(context);
 
-                String passwords = AESEncrypt.decrypt(respStr, syncPassword);
+                String passwords = AESUtil.decrypt(respStr, syncPassword);
 
                 List<Password> passwordList = JSON.parseArray(passwords, Password.class);
 

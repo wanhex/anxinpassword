@@ -33,7 +33,7 @@ public class BaiduOAuthActivity extends AppCompatActivity {
         });
         WebSettings webSettings = mWebView.getSettings();
         // 让WebView能够执行javaScript
-        webSettings.setJavaScriptEnabled(false);
+        webSettings.setJavaScriptEnabled(true);
         // 让JavaScript可以自动打开windows
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         // 设置缓存
