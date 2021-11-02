@@ -12,6 +12,7 @@ import android.webkit.WebViewClient;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.wanhex.anxinpassword.R;
+import com.wanhex.anxinpassword.settings.SettingsActivity;
 
 public class BaiduOAuthActivity extends AppCompatActivity {
 
@@ -69,6 +70,8 @@ public class BaiduOAuthActivity extends AppCompatActivity {
                 for (int i = 0; i < params.length; i++) {
                     if (params[i].contains("access_token")) {
                         intent.putExtra("access_token", params[i].substring(13));
+
+                        BaiduNetDiskSettings.setAccessToken(BaiduOAuthActivity.this, params[i].substring(13));
                     }
                 }
                 setResult(RESULT_OK, intent);
