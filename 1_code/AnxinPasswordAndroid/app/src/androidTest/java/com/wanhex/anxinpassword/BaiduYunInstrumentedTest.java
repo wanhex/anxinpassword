@@ -98,6 +98,7 @@ public class BaiduYunInstrumentedTest {
     }
 
     @Test
+    @Ignore
     public void testLoginBaiduAccountWithPasswordWrong() {
 
         //prepare test data
