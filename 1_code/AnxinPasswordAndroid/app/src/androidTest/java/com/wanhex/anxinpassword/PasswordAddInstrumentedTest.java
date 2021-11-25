@@ -5,6 +5,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.pressKey;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
@@ -66,13 +67,13 @@ public class PasswordAddInstrumentedTest {
 
         //do test
         onView(withId(R.id.et_title))
-                .perform(typeText("testaccount"), pressKey(KeyEvent.KEYCODE_ENTER));
+                .perform(replaceText("testaccount0"), pressKey(KeyEvent.KEYCODE_ENTER));
         onView(withId(R.id.et_username))
-                .perform(typeText("TestUser0"));
+                .perform(replaceText("TestUser0"));
         onView(withId(R.id.et_passwd))
-                .perform(typeText("TestPassword0"));
+                .perform(replaceText("TestPassword0"));
         onView(withId(R.id.et_comments))
-                .perform(typeText("testcomments"), pressKey(KeyEvent.KEYCODE_ENTER));
+                .perform(replaceText("testcomments"), pressKey(KeyEvent.KEYCODE_ENTER));
 
         onView(withId(R.id.save_password)).perform(click());
 
@@ -80,7 +81,7 @@ public class PasswordAddInstrumentedTest {
         onView(withId(R.id.password_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         onView(withId(R.id.et_title))
-                .check(matches(withText("testaccount")));
+                .check(matches(withText("testaccount0")));
         onView(withId(R.id.et_username))
                 .check(matches(withText("TestUser0")));
         onView(withId(R.id.et_passwd))
@@ -97,11 +98,11 @@ public class PasswordAddInstrumentedTest {
 
         //do test
         onView(withId(R.id.et_title))
-                .perform(typeText("testaccountt"), pressKey(KeyEvent.KEYCODE_ENTER));
+                .perform(replaceText("testaccountt"), pressKey(KeyEvent.KEYCODE_ENTER));
         onView(withId(R.id.et_username))
-                .perform(typeText("TestUser1"));
+                .perform(replaceText("TestUser1"));
         onView(withId(R.id.et_passwd))
-                .perform(typeText("TestPassword1"));
+                .perform(replaceText("TestPassword1"));
 
         onView(withId(R.id.save_password)).perform(click());
 
@@ -119,20 +120,52 @@ public class PasswordAddInstrumentedTest {
 
 
     @Test
-    public void testAddPasswordWithoutEmptyTitle() {
+    public void testAddPasswordWithEmptyTitle() {
         //prepare
         onView(withId(R.id.add_password)).perform(click());
 
         //do test
         onView(withId(R.id.et_username))
-                .perform(typeText("TestUser1"));
+                .perform(replaceText("TestUser1"));
         onView(withId(R.id.et_passwd))
-                .perform(typeText("TestPassword1"));
+                .perform(replaceText("TestPassword1"));
 
         onView(withId(R.id.save_password)).perform(click());
 
         //verify
         onView(withText("标题不能为空")).inRoot(isPlatformPopup()).check(matches(isDisplayed()));
+
+    }
+
+    @Test
+    public void testAddPasswordWithEmptyUserName() {
+        //prepare
+        onView(withId(R.id.add_password)).perform(click());
+
+        //do test
+        onView(withId(R.id.et_title))
+                .perform(replaceText("TestTitle"));
+        onView(withId(R.id.save_password)).perform(click());
+
+        //verify
+        onView(withText("用户名不能为空")).inRoot(isPlatformPopup()).check(matches(isDisplayed()));
+
+    }
+
+    @Test
+    public void testAddPasswordWithEmptyPassword() {
+        //prepare
+        onView(withId(R.id.add_password)).perform(click());
+
+        //do test
+        onView(withId(R.id.et_title))
+                .perform(replaceText("TestTitle"));
+        onView(withId(R.id.et_username))
+                .perform(replaceText("TestPassword"));
+        onView(withId(R.id.save_password)).perform(click());
+
+        //verify
+        onView(withText("密码不能为空")).inRoot(isPlatformPopup()).check(matches(isDisplayed()));
 
     }
 }
