@@ -141,6 +141,16 @@ public class SettingsActivity extends AppCompatActivity {
                 MyApp app = (MyApp) getApplication();
                 AppDatabase appDatabase = app.getPasswordDb();
                 List<Password> passwordList = appDatabase.passwordDao().getAll();
+
+                if (passwordList != null && passwordList.size() == 0) {
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(SettingsActivity.this, "本地还没有密码，请先创建密码 或 从百度云盘恢复密码!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                }
                 String passwordsJsonStr = JSON.toJSONString(passwordList);
 
                 String syncPassword = AppSettings.getSyncPassword(SettingsActivity.this);
@@ -181,6 +191,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     Toast.makeText(SettingsActivity.this, result, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SettingsActivity.this, "同步密码到百度云盘失败，请重新登录百度云盘账户后重试!", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -236,7 +247,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 mRestorePb.setVisibility(View.INVISIBLE);
                                 mRestoreRLyt.setEnabled(true);
                                 Toast.makeText(SettingsActivity.this, result, Toast.LENGTH_SHORT).show();
-                                Toast.makeText(SettingsActivity.this, "请重新登录百度云盘账户后重试!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SettingsActivity.this, "从百度云盘恢复密码失败，请重新登录百度云盘账户后重试!", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

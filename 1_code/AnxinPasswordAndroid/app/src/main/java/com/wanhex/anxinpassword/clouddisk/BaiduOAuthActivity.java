@@ -12,7 +12,6 @@ import android.webkit.WebViewClient;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.wanhex.anxinpassword.R;
-import com.wanhex.anxinpassword.settings.SettingsActivity;
 
 public class BaiduOAuthActivity extends AppCompatActivity {
 

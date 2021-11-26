@@ -9,20 +9,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.activity.ComponentActivity;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-
-import com.wanhex.anxinpassword.MainActivity;
-import com.wanhex.anxinpassword.MyApp;
-import com.wanhex.anxinpassword.db.AppDatabase;
 
 public class KeyguardVerifyUtil {
 
