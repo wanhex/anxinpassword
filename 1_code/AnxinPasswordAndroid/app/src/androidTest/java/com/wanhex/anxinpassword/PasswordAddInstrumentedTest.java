@@ -78,11 +78,13 @@ public class PasswordAddInstrumentedTest {
         onView(withId(R.id.et_comments))
                 .perform(replaceText("testcomments"), pressKey(KeyEvent.KEYCODE_ENTER));
 
+        //click save button.
         onView(withId(R.id.save_password)).perform(click());
 
-        //verify
+        //view password added before.
         onView(withId(R.id.password_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
+        //verify
         onView(withId(R.id.et_title))
                 .check(matches(withText("testaccount0")));
         onView(withId(R.id.et_username))
