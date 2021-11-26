@@ -3,18 +3,26 @@ package com.wanhex.anxinpassword.cipher;
 import static android.app.Activity.RESULT_OK;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.ComponentActivity;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+
+import com.wanhex.anxinpassword.MainActivity;
+import com.wanhex.anxinpassword.MyApp;
+import com.wanhex.anxinpassword.db.AppDatabase;
 
 public class KeyguardVerifyUtil {
 
@@ -72,6 +80,14 @@ public class KeyguardVerifyUtil {
         keyguardMgr = activity.getSystemService(KeyguardManager.class);
         Intent intent = keyguardMgr.createConfirmDeviceCredentialIntent(null, null);
         if (intent == null) {
+            new AlertDialog.Builder(activity)
+                    .setMessage("未检测到锁屏密码保护，为了您的密码安全，请设置锁屏密码!!!")
+                    .setPositiveButton("好的", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).show();
             mOnKeyguardVerifiedListener.onKeyguardVerifyResult(true);
             return;
         }

@@ -233,8 +233,10 @@ public class SettingsActivity extends AppCompatActivity {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
+                                mRestorePb.setVisibility(View.INVISIBLE);
                                 mRestoreRLyt.setEnabled(true);
                                 Toast.makeText(SettingsActivity.this, result, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SettingsActivity.this, "请重新登录百度云盘账户后重试!", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
