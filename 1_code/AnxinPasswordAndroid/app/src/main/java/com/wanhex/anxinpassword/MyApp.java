@@ -12,7 +12,7 @@ import net.sqlcipher.database.SupportFactory;
 
 public class MyApp extends Application {
 
-    AppDatabase mPasswordDb;
+    private static AppDatabase mPasswordDb;
 
     @Override
     public void onCreate() {
@@ -27,7 +27,7 @@ public class MyApp extends Application {
         Bugly.init(getApplicationContext(), "49d54a1304", true);
     }
 
-    public AppDatabase getPasswordDb() {
+    public static AppDatabase getPasswordDb() {
         return mPasswordDb;
     }
 }

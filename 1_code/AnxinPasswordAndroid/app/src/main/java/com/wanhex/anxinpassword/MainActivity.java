@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mPasswordListView;
     private boolean mKeyguardVerified;
 
+    private ImageView mEmptyIv;
+    private TextView mEmptyTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         mPasswordListView = binding.passwordList;
+        mEmptyIv = binding.ivEmpty;
+        mEmptyTv = binding.tvEmpty;
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mPasswordListView.setLayoutManager(layoutManager);
@@ -93,6 +99,14 @@ public class MainActivity extends AppCompatActivity {
                                             public void run() {
                                                 mPasswordList.remove(i);
                                                 mAdapter.notifyDataSetChanged();
+
+                                                if (mPasswordList.size() == 0) {
+                                                    mEmptyIv.setVisibility(View.VISIBLE);
+                                                    mEmptyTv.setVisibility(View.VISIBLE);
+                                                } else {
+                                                    mEmptyIv.setVisibility(View.GONE);
+                                                    mEmptyTv.setVisibility(View.GONE);
+                                                }
                                             }
                                         });
                                     }
@@ -134,6 +148,9 @@ public class MainActivity extends AppCompatActivity {
                     mPasswordList.add(0, passwordNew);
                     mAdapter.notifyDataSetChanged();
                     syncToBaiduYun();
+
+                    mEmptyIv.setVisibility(View.GONE);
+                    mEmptyTv.setVisibility(View.GONE);
                     return;
                 }
                 Password passwordEdit = (Password) data.getExtras().get("password_edit");
@@ -203,6 +220,13 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         mAdapter.notifyDataSetChanged();
+                        if (mPasswordList.size() == 0) {
+                            mEmptyIv.setVisibility(View.VISIBLE);
+                            mEmptyTv.setVisibility(View.VISIBLE);
+                        } else {
+                            mEmptyIv.setVisibility(View.GONE);
+                            mEmptyTv.setVisibility(View.GONE);
+                        }
                     }
                 });
 

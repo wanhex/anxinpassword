@@ -30,6 +30,8 @@ public class PasswordEditInstrumentedTest {
 
     @Before
     public void setUp() {
+        MyApp.getPasswordDb().passwordDao().deleteAll();
+
         mAppContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         ActivityScenario.launch(MainActivity.class);
 
@@ -54,6 +56,7 @@ public class PasswordEditInstrumentedTest {
 
     @After
     public void tearDown() {
+        MyApp.getPasswordDb().passwordDao().deleteAll();
     }
 
     @Test
