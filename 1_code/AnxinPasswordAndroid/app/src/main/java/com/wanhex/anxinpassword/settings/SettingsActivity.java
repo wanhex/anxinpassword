@@ -110,7 +110,6 @@ public class SettingsActivity extends AppCompatActivity {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                String baiduName = BaiduNetDiskSettings.getBaiduName(SettingsActivity.this);
                                 mBaiduYunNameTv.setText(baiduName);
                                 syncToBaiduYun();
                             }
