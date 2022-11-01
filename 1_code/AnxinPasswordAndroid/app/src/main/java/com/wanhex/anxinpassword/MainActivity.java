@@ -43,9 +43,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    static {
-        System.loadLibrary("anxinpassword");
-    }
+//    static {
+//        System.loadLibrary("anxinpassword");
+//    }
 
     private ActivityMainBinding binding;
     private ActivityResultLauncher mActivityResultLauncher;

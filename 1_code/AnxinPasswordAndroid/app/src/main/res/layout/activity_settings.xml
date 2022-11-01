@@ -35,6 +35,7 @@
                     android:layout_marginLeft="15dp"
                     android:gravity="center_vertical"
                     android:text="百度云盘账户设置"
+                    android:textColor="@color/black_light"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -49,6 +50,8 @@
                     android:gravity="right|center_vertical"
                     android:hint="未设置"
                     android:maxLines="1"
+                    android:textColor="@color/black_light_light"
+                    android:textColorHint="@color/black_light_light"
                     android:textSize="18sp" />
 
                 <ImageView
@@ -79,6 +82,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="15dp"
                     android:gravity="center_vertical"
+                    android:textColor="@color/black_light"
                     android:text="百度云盘双重加密"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -87,11 +91,12 @@
                     android:id="@+id/tv_sync_password"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_toLeftOf="@+id/iv_nav_right0"
                     android:layout_marginLeft="19dp"
                     android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@+id/iv_nav_right0"
                     android:layout_toRightOf="@+id/tv_sync_password_label"
                     android:gravity="right|center_vertical"
+                    android:textColorHint="@color/black_light_light"
                     android:hint="默认密码"
                     android:maxLines="1"
                     android:textSize="18sp" />
@@ -123,6 +128,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="15dp"
                     android:gravity="center_vertical"
+                    android:textColor="@color/black_light"
                     android:text="自动备份（本机->百度云盘）"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -156,6 +162,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="15dp"
                     android:gravity="center_vertical"
+                    android:textColor="@color/black_light"
                     android:text="数据还原（百度云盘->本机）"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -199,6 +206,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="15dp"
                     android:gravity="center_vertical"
+                    android:textColor="@color/black_light"
                     android:text="开源代码"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -212,6 +220,7 @@
                     android:layout_toLeftOf="@+id/iv_nav_right4"
                     android:layout_toRightOf="@+id/tv_opensource_label"
                     android:gravity="right|center_vertical"
+                    android:textColorHint="@color/black_light_light"
                     android:hint="anxinpassword@github"
                     android:maxLines="1"
                     android:textSize="18sp" />
@@ -245,6 +254,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="15dp"
                     android:gravity="center_vertical"
+                    android:textColor="@color/black_light"
                     android:text="意见反馈"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -278,6 +288,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="15dp"
                     android:gravity="center_vertical"
+                    android:textColor="@color/black_light"
                     android:text="关于软件"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -293,6 +304,7 @@
                     android:gravity="right|center_vertical"
                     android:hint="安心密码v1.0"
                     android:maxLines="1"
+                    android:textColorHint="@color/black_light_light"
                     android:textSize="18sp" />
 
                 <ImageView
