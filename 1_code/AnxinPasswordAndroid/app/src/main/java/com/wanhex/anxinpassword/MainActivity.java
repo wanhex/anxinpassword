@@ -184,6 +184,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onKeyguardVerifyResult(boolean keyguardVerified) {
                 mKeyguardVerified = keyguardVerified;
+                if (!keyguardVerified) {
+                    Toast.makeText(MainActivity.this, "锁屏验证失败，安心密码App拒绝运行!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
                 if (keyguardVerified) {
                     KeyguardVerifyUtil.updatePassTime(MainActivity.this);
                 }
